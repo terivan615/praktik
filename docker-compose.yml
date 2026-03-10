@@ -1,0 +1,51 @@
+--- nocodb/docker-compose.yml (原始)
+
+
++++ nocodb/docker-compose.yml (修改后)
+version: '3.8'
+
+services:
+  nocodb:
+    image: nocodb/nocodb:latest
+    container_name: supportdesk-nocodb
+    restart: unless-stopped
+    ports:
+      - "8080:8080"
+    environment:
+      NC_DB: "sqlite3:/usr/app/data/noco.db"
+      NC_AUTH_JWT_SECRET: "supportdesk-secret-key-change-in-production"
+      NC_PUBLIC_URL: "http://localhost:8080"
+    volumes:
+      - nocodb_/usr/app/data
+    networks:
+      - supportdesk-network
+
+  # Optional: PostgreSQL database (for production use)
+  # Uncomment below for PostgreSQL instead of SQLite
+  # postgres:
+  #   image: postgres:15-alpine
+  #   container_name: supportdesk-postgres
+  #   restart: unless-stopped
+  #   environment:
+  #     POSTGRES_DB: supportdesk
+  #     POSTGRES_USER: nocodb
+  #     POSTGRES_PASSWORD: secure_password_change_me
+  #   volumes:
+  #     - postgres_/var/lib/postgresql/data
+  #   networks:
+  #     - supportdesk-network
+  #   healthcheck:
+  #     test: ["CMD-SHELL", "pg_isready -U nocodb"]
+  #     interval: 10s
+  #     timeout: 5s
+  #     retries: 5
+
+networks:
+  supportdesk-network:
+    driver: bridge
+
+volumes:
+  nocodb_
+    driver: local
+  # postgres_
+  #   driver: local

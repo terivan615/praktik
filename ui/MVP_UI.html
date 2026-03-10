@@ -1,0 +1,1172 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>SupportDesk Analytics - Прототип</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.0/font/bootstrap-icons.css">
+    <script src="https://cdn.plot.ly/plotly-2.27.0.min.js"></script>
+    <style>
+        :root {
+            --primary-color: #2563eb;
+            --secondary-color: #64748b;
+            --success-color: #10b981;
+            --warning-color: #f59e0b;
+            --danger-color: #ef4444;
+            --sidebar-width: 260px;
+        }
+
+        body {
+            background-color: #f1f5f9;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+
+        /* Sidebar */
+        .sidebar {
+            position: fixed;
+            top: 0;
+            left: 0;
+            height: 100vh;
+            width: var(--sidebar-width);
+            background: linear-gradient(180deg, #1e293b 0%, #0f172a 100%);
+            color: white;
+            z-index: 1000;
+            overflow-y: auto;
+        }
+
+        .sidebar-brand {
+            padding: 20px;
+            font-size: 20px;
+            font-weight: bold;
+            border-bottom: 1px solid #334155;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .sidebar-menu {
+            padding: 20px 0;
+        }
+
+        .sidebar-menu a {
+            display: flex;
+            align-items: center;
+            padding: 12px 20px;
+            color: #94a3b8;
+            text-decoration: none;
+            transition: all 0.3s;
+            gap: 12px;
+        }
+
+        .sidebar-menu a:hover, .sidebar-menu a.active {
+            background-color: #334155;
+            color: white;
+            border-left: 4px solid var(--primary-color);
+        }
+
+        .sidebar-menu a i {
+            font-size: 18px;
+            width: 24px;
+        }
+
+        /* Main Content */
+        .main-content {
+            margin-left: var(--sidebar-width);
+            padding: 20px;
+        }
+
+        .top-bar {
+            background: white;
+            padding: 15px 25px;
+            border-radius: 10px;
+            box-shadow: 0 1px 3px rgba(0,0,0,0.1);
+            margin-bottom: 25px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        /* Cards */
+        .stat-card {
+            background: white;
+            border-radius: 10px;
+            padding: 25px;
+            box-shadow: 0 1px 3px rgba(0,0,0,0.1);
+            margin-bottom: 25px;
+            transition: transform 0.2s;
+        }
+
+        .stat-card:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+        }
+
+        .stat-card .icon {
+            width: 50px;
+            height: 50px;
+            border-radius: 10px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 24px;
+            margin-bottom: 15px;
+        }
+
+        .stat-card .icon.blue { background-color: #dbeafe; color: var(--primary-color); }
+        .stat-card .icon.green { background-color: #d1fae5; color: var(--success-color); }
+        .stat-card .icon.orange { background-color: #fef3c7; color: var(--warning-color); }
+        .stat-card .icon.red { background-color: #fee2e2; color: var(--danger-color); }
+
+        .stat-card .value {
+            font-size: 32px;
+            font-weight: bold;
+            color: #1e293b;
+            margin-bottom: 5px;
+        }
+
+        .stat-card .label {
+            color: var(--secondary-color);
+            font-size: 14px;
+        }
+
+        .stat-card .trend {
+            font-size: 13px;
+            margin-top: 10px;
+        }
+
+        .trend.up { color: var(--success-color); }
+        .trend.down { color: var(--danger-color); }
+
+        /* Content Cards */
+        .content-card {
+            background: white;
+            border-radius: 10px;
+            box-shadow: 0 1px 3px rgba(0,0,0,0.1);
+            margin-bottom: 25px;
+        }
+
+        .content-card-header {
+            padding: 20px 25px;
+            border-bottom: 1px solid #e2e8f0;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .content-card-title {
+            font-size: 18px;
+            font-weight: 600;
+            color: #1e293b;
+            margin: 0;
+        }
+
+        .content-card-body {
+            padding: 25px;
+        }
+
+        /* Tables */
+        .custom-table {
+            width: 100%;
+        }
+
+        .custom-table th {
+            background-color: #f8fafc;
+            font-weight: 600;
+            color: #475569;
+            border-bottom: 2px solid #e2e8f0;
+            padding: 12px;
+        }
+
+        .custom-table td {
+            padding: 15px 12px;
+            border-bottom: 1px solid #e2e8f0;
+            vertical-align: middle;
+        }
+
+        .custom-table tr:hover {
+            background-color: #f8fafc;
+        }
+
+        /* Badges */
+        .status-badge {
+            padding: 6px 12px;
+            border-radius: 20px;
+            font-size: 12px;
+            font-weight: 600;
+            display: inline-flex;
+            align-items: center;
+            gap: 5px;
+        }
+
+        .status-badge::before {
+            content: '';
+            width: 6px;
+            height: 6px;
+            border-radius: 50%;
+        }
+
+        .status-new { background-color: #dbeafe; color: #1e40af; }
+        .status-new::before { background-color: #3b82f6; }
+
+        .status-in-progress { background-color: #fef3c7; color: #92400e; }
+        .status-in-progress::before { background-color: #f59e0b; }
+
+        .status-resolved { background-color: #d1fae5; color: #065f46; }
+        .status-resolved::before { background-color: #10b981; }
+
+        .status-closed { background-color: #e2e8f0; color: #475569; }
+        .status-closed::before { background-color: #64748b; }
+
+        .priority-badge {
+            padding: 4px 10px;
+            border-radius: 6px;
+            font-size: 12px;
+            font-weight: 600;
+        }
+
+        .priority-high { background-color: #fee2e2; color: #991b1b; }
+        .priority-medium { background-color: #fef3c7; color: #92400e; }
+        .priority-low { background-color: #d1fae5; color: #065f46; }
+
+        /* Buttons */
+        .btn-primary-custom {
+            background-color: var(--primary-color);
+            color: white;
+            border: none;
+            padding: 10px 20px;
+            border-radius: 8px;
+            font-weight: 500;
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            transition: all 0.3s;
+        }
+
+        .btn-primary-custom:hover {
+            background-color: #1d4ed8;
+            color: white;
+            transform: translateY(-1px);
+        }
+
+        /* Charts Container */
+        .chart-container {
+            height: 350px;
+        }
+
+        /* Ticket Card */
+        .ticket-card {
+            border: 1px solid #e2e8f0;
+            border-radius: 8px;
+            padding: 20px;
+            margin-bottom: 15px;
+            background: white;
+            transition: all 0.2s;
+            cursor: pointer;
+        }
+
+        .ticket-card:hover {
+            box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+            border-color: var(--primary-color);
+        }
+
+        .ticket-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: start;
+            margin-bottom: 15px;
+        }
+
+        .ticket-id {
+            font-weight: 600;
+            color: var(--primary-color);
+            margin-bottom: 5px;
+        }
+
+        .ticket-title {
+            font-size: 16px;
+            color: #1e293b;
+            margin-bottom: 10px;
+        }
+
+        .ticket-meta {
+            display: flex;
+            gap: 20px;
+            font-size: 13px;
+            color: var(--secondary-color);
+        }
+
+        .ticket-meta span {
+            display: flex;
+            align-items: center;
+            gap: 5px;
+        }
+
+        /* SLA Indicator */
+        .sla-indicator {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            font-size: 13px;
+        }
+
+        .sla-bar {
+            width: 100px;
+            height: 6px;
+            background-color: #e2e8f0;
+            border-radius: 3px;
+            overflow: hidden;
+        }
+
+        .sla-progress {
+            height: 100%;
+            border-radius: 3px;
+            transition: width 0.3s;
+        }
+
+        .sla-progress.good { background-color: var(--success-color); }
+        .sla-progress.warning { background-color: var(--warning-color); }
+        .sla-progress.danger { background-color: var(--danger-color); }
+
+        /* Page Sections */
+        .page-section {
+            display: none;
+        }
+
+        .page-section.active {
+            display: block;
+        }
+
+        /* Form Elements */
+        .form-label-custom {
+            font-weight: 500;
+            color: #374151;
+            margin-bottom: 8px;
+        }
+
+        .form-control-custom {
+            border: 1px solid #d1d5db;
+            border-radius: 8px;
+            padding: 10px 15px;
+            transition: all 0.2s;
+        }
+
+        .form-control-custom:focus {
+            border-color: var(--primary-color);
+            box-shadow: 0 0 0 3px rgba(37, 99, 235, 0.1);
+        }
+
+        /* Avatar */
+        .avatar {
+            width: 36px;
+            height: 36px;
+            border-radius: 50%;
+            background-color: var(--primary-color);
+            color: white;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: 600;
+            font-size: 14px;
+        }
+
+        /* Responsive */
+        @media (max-width: 768px) {
+            .sidebar {
+                transform: translateX(-100%);
+            }
+            
+            .main-content {
+                margin-left: 0;
+            }
+        }
+
+        /* Animations */
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(10px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        .animate-fade-in {
+            animation: fadeIn 0.3s ease-out;
+        }
+    </style>
+</head>
+<body>
+
+    <!-- Sidebar -->
+    <div class="sidebar">
+        <div class="sidebar-brand">
+            <i class="bi bi-headset"></i>
+            SupportDesk Analytics
+        </div>
+        <div class="sidebar-menu">
+            <a href="#" class="active" onclick="showPage('dashboard')">
+                <i class="bi bi-speedometer2"></i>
+                <span>Дашборд</span>
+            </a>
+            <a href="#" onclick="showPage('tickets')">
+                <i class="bi bi-ticket-perforated"></i>
+                <span>Заявки</span>
+                <span class="badge bg-primary ms-auto">24</span>
+            </a>
+            <a href="#" onclick="showPage('create-ticket')">
+                <i class="bi bi-plus-circle"></i>
+                <span>Создать заявку</span>
+            </a>
+            <a href="#" onclick="showPage('analytics')">
+                <i class="bi bi-graph-up"></i>
+                <span>Аналитика</span>
+            </a>
+            <a href="#" onclick="showPage('reports')">
+                <i class="bi bi-file-earmark-bar-graph"></i>
+                <span>Отчёты</span>
+            </a>
+            <a href="#" onclick="showPage('users')">
+                <i class="bi bi-people"></i>
+                <span>Сотрудники</span>
+            </a>
+            <a href="#" onclick="showPage('settings')">
+                <i class="bi bi-gear"></i>
+                <span>Настройки</span>
+            </a>
+        </div>
+    </div>
+
+    <!-- Main Content -->
+    <div class="main-content">
+        <!-- Top Bar -->
+        <div class="top-bar">
+            <div>
+                <h4 class="mb-0" id="page-title">Дашборд</h4>
+                <small class="text-muted">Система учёта и обработки заявок</small>
+            </div>
+            <div class="d-flex align-items-center gap-3">
+                <div class="position-relative">
+                    <i class="bi bi-bell" style="font-size: 20px; color: #64748b; cursor: pointer;"></i>
+                    <span class="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-danger" style="font-size: 10px;">
+                        3
+                    </span>
+                </div>
+                <div class="d-flex align-items-center gap-2">
+                    <div class="avatar">ИП</div>
+                    <div>
+                        <div style="font-weight: 600; font-size: 14px;">Иван Петров</div>
+                        <div style="font-size: 12px; color: #64748b;">Руководитель поддержки</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- DASHBOARD PAGE -->
+        <div id="dashboard" class="page-section active">
+            <!-- Stats Cards -->
+            <div class="row">
+                <div class="col-md-3">
+                    <div class="stat-card">
+                        <div class="icon blue">
+                            <i class="bi bi-ticket"></i>
+                        </div>
+                        <div class="value">156</div>
+                        <div class="label">Всего заявок</div>
+                        <div class="trend up">
+                            <i class="bi bi-arrow-up"></i> 12% за неделю
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-3">
+                    <div class="stat-card">
+                        <div class="icon orange">
+                            <i class="bi bi-clock-history"></i>
+                        </div>
+                        <div class="value">24</div>
+                        <div class="label">В работе</div>
+                        <div class="trend down">
+                            <i class="bi bi-arrow-down"></i> 5% за неделю
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-3">
+                    <div class="stat-card">
+                        <div class="icon green">
+                            <i class="bi bi-check-circle"></i>
+                        </div>
+                        <div class="value">94%</div>
+                        <div class="label">SLA выполнено</div>
+                        <div class="trend up">
+                            <i class="bi bi-arrow-up"></i> 2% за неделю
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-3">
+                    <div class="stat-card">
+                        <div class="icon red">
+                            <i class="bi bi-exclamation-triangle"></i>
+                        </div>
+                        <div class="value">3</div>
+                        <div class="label">Просрочено</div>
+                        <div class="trend down">
+                            <i class="bi bi-arrow-down"></i> 1 за неделю
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Charts Row -->
+            <div class="row">
+                <div class="col-md-8">
+                    <div class="content-card">
+                        <div class="content-card-header">
+                            <h5 class="content-card-title">Динамика заявок</h5>
+                            <select class="form-select form-select-sm" style="width: auto;">
+                                <option>За последние 30 дней</option>
+                                <option>За неделю</option>
+                                <option>За месяц</option>
+                            </select>
+                        </div>
+                        <div class="content-card-body">
+                            <div id="ticketsChart" class="chart-container"></div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-4">
+                    <div class="content-card">
+                        <div class="content-card-header">
+                            <h5 class="content-card-title">Распределение по статусам</h5>
+                        </div>
+                        <div class="content-card-body">
+                            <div id="statusChart" class="chart-container"></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Recent Tickets -->
+            <div class="content-card">
+                <div class="content-card-header">
+                    <h5 class="content-card-title">Последние заявки</h5>
+                    <button class="btn btn-primary-custom btn-sm" onclick="showPage('tickets')">
+                        Все заявки <i class="bi bi-arrow-right"></i>
+                    </button>
+                </div>
+                <div class="content-card-body" style="padding: 0;">
+                    <table class="custom-table">
+                        <thead>
+                            <tr>
+                                <th>ID</th>
+                                <th>Заголовок</th>
+                                <th>Приоритет</th>
+                                <th>Статус</th>
+                                <th>Исполнитель</th>
+                                <th>SLA</th>
+                                <th>Создана</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td><strong>#1247</strong></td>
+                                <td>Не работает принтер в бухгалтерии</td>
+                                <td><span class="priority-badge priority-high">Высокий</span></td>
+                                <td><span class="status-badge status-in-progress">В работе</span></td>
+                                <td>
+                                    <div class="d-flex align-items-center gap-2">
+                                        <div class="avatar" style="width: 28px; height: 28px; font-size: 12px;">АС</div>
+                                        <span>А. Сидоров</span>
+                                    </div>
+                                </td>
+                                <td>
+                                    <div class="sla-indicator">
+                                        <div class="sla-bar">
+                                            <div class="sla-progress warning" style="width: 75%"></div>
+                                        </div>
+                                        <span>2ч 15м</span>
+                                    </div>
+                                </td>
+                                <td>15 мин назад</td>
+                            </tr>
+                            <tr>
+                                <td><strong>#1246</strong></td>
+                                <td>Настройка VPN для удалённого доступа</td>
+                                <td><span class="priority-badge priority-medium">Средний</span></td>
+                                <td><span class="status-badge status-new">Новая</span></td>
+                                <td>—</td>
+                                <td>
+                                    <div class="sla-indicator">
+                                        <div class="sla-bar">
+                                            <div class="sla-progress good" style="width: 30%"></div>
+                                        </div>
+                                        <span>6ч 45м</span>
+                                    </div>
+                                </td>
+                                <td>32 мин назад</td>
+                            </tr>
+                            <tr>
+                                <td><strong>#1245</strong></td>
+                                <td>Замена картриджа в кабинете 305</td>
+                                <td><span class="priority-badge priority-low">Низкий</span></td>
+                                <td><span class="status-badge status-resolved">Решена</span></td>
+                                <td>
+                                    <div class="d-flex align-items-center gap-2">
+                                        <div class="avatar" style="width: 28px; height: 28px; font-size: 12px;">МК</div>
+                                        <span>М. Козлов</span>
+                                    </div>
+                                </td>
+                                <td>
+                                    <div class="sla-indicator">
+                                        <div class="sla-bar">
+                                            <div class="sla-progress good" style="width: 100%"></div>
+                                        </div>
+                                        <span>Выполнено</span>
+                                    </div>
+                                </td>
+                                <td>1 час назад</td>
+                            </tr>
+                            <tr>
+                                <td><strong>#1244</strong></td>
+                                <td>Не открывается 1С:Предприятие</td>
+                                <td><span class="priority-badge priority-high">Высокий</span></td>
+                                <td><span class="status-badge status-in-progress">В работе</span></td>
+                                <td>
+                                    <div class="d-flex align-items-center gap-2">
+                                        <div class="avatar" style="width: 28px; height: 28px; font-size: 12px;">ИП</div>
+                                        <span>И. Петров</span>
+                                    </div>
+                                </td>
+                                <td>
+                                    <div class="sla-indicator">
+                                        <div class="sla-bar">
+                                            <div class="sla-progress danger" style="width: 90%"></div>
+                                        </div>
+                                        <span>15 мин</span>
+                                    </div>
+                                </td>
+                                <td>2 часа назад</td>
+                            </tr>
+                            <tr>
+                                <td><strong>#1243</strong></td>
+                                <td>Установка MS Office на новый ПК</td>
+                                <td><span class="priority-badge priority-medium">Средний</span></td>
+                                <td><span class="status-badge status-closed">Закрыта</span></td>
+                                <td>
+                                    <div class="d-flex align-items-center gap-2">
+                                        <div class="avatar" style="width: 28px; height: 28px; font-size: 12px;">АС</div>
+                                        <span>А. Сидоров</span>
+                                    </div>
+                                </td>
+                                <td>
+                                    <div class="sla-indicator">
+                                        <div class="sla-bar">
+                                            <div class="sla-progress good" style="width: 100%"></div>
+                                        </div>
+                                        <span>Выполнено</span>
+                                    </div>
+                                </td>
+                                <td>Вчера</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+
+        <!-- TICKETS PAGE -->
+        <div id="tickets" class="page-section">
+            <div class="content-card">
+                <div class="content-card-header">
+                    <h5 class="content-card-title">Все заявки</h5>
+                    <div class="d-flex gap-2">
+                        <button class="btn btn-outline-secondary btn-sm">
+                            <i class="bi bi-filter"></i> Фильтры
+                        </button>
+                        <button class="btn btn-outline-secondary btn-sm">
+                            <i class="bi bi-download"></i> Экспорт
+                        </button>
+                        <button class="btn btn-primary-custom btn-sm" onclick="showPage('create-ticket')">
+                            <i class="bi bi-plus"></i> Новая заявка
+                        </button>
+                    </div>
+                </div>
+                <div class="content-card-body">
+                    <!-- Filters -->
+                    <div class="row mb-4">
+                        <div class="col-md-3">
+                            <input type="text" class="form-control form-control-custom" placeholder="Поиск по заявкам...">
+                        </div>
+                        <div class="col-md-2">
+                            <select class="form-select form-control-custom">
+                                <option>Все статусы</option>
+                                <option>Новая</option>
+                                <option>В работе</option>
+                                <option>Решена</option>
+                                <option>Закрыта</option>
+                            </select>
+                        </div>
+                        <div class="col-md-2">
+                            <select class="form-select form-control-custom">
+                                <option>Все приоритеты</option>
+                                <option>Высокий</option>
+                                <option>Средний</option>
+                                <option>Низкий</option>
+                            </select>
+                        </div>
+                        <div class="col-md-2">
+                            <select class="form-select form-control-custom">
+                                <option>Все исполнители</option>
+                                <option>И. Петров</option>
+                                <option>А. Сидоров</option>
+                                <option>М. Козлов</option>
+                            </select>
+                        </div>
+                        <div class="col-md-3 text-end">
+                            <button class="btn btn-primary-custom">
+                                <i class="bi bi-search"></i> Применить
+                            </button>
+                        </div>
+                    </div>
+
+                    <!-- Tickets List -->
+                    <div id="ticketsList">
+                        <!-- Ticket 1 -->
+                        <div class="ticket-card" onclick="showTicketDetail(1247)">
+                            <div class="ticket-header">
+                                <div>
+                                    <div class="ticket-id">#1247</div>
+                                    <div class="ticket-title">Не работает принтер в бухгалтерии</div>
+                                    <div class="ticket-meta">
+                                        <span><i class="bi bi-person"></i> Мария Иванова (Бухгалтерия)</span>
+                                        <span><i class="bi bi-clock"></i> 15 минут назад</span>
+                                        <span><i class="bi bi-tag"></i> Оборудование</span>
+                                    </div>
+                                </div>
+                                <div class="d-flex gap-2">
+                                    <span class="priority-badge priority-high">Высокий</span>
+                                    <span class="status-badge status-in-progress">В работе</span>
+                                </div>
+                            </div>
+                            <div class="d-flex justify-content-between align-items-center">
+                                <div class="d-flex align-items-center gap-2">
+                                    <div class="avatar" style="width: 32px; height: 32px; font-size: 12px;">АС</div>
+                                    <span style="font-size: 14px;">А. Сидоров</span>
+                                </div>
+                                <div class="sla-indicator">
+                                    <span style="color: #f59e0b;"><i class="bi bi-exclamation-circle"></i> SLA: 2ч 15м</span>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Ticket 2 -->
+                        <div class="ticket-card" onclick="showTicketDetail(1246)">
+                            <div class="ticket-header">
+                                <div>
+                                    <div class="ticket-id">#1246</div>
+                                    <div class="ticket-title">Настройка VPN для удалённого доступа</div>
+                                    <div class="ticket-meta">
+                                        <span><i class="bi bi-person"></i> Сергей Петров (Отдел продаж)</span>
+                                        <span><i class="bi bi-clock"></i> 32 минуты назад</span>
+                                        <span><i class="bi bi-tag"></i> Сеть</span>
+                                    </div>
+                                </div>
+                                <div class="d-flex gap-2">
+                                    <span class="priority-badge priority-medium">Средний</span>
+                                    <span class="status-badge status-new">Новая</span>
+                                </div>
+                            </div>
+                            <div class="d-flex justify-content-between align-items-center">
+                                <div style="font-size: 14px; color: #64748b;">
+                                    <i class="bi bi-person-plus"></i> Не назначен
+                                </div>
+                                <div class="sla-indicator">
+                                    <span style="color: #10b981;"><i class="bi bi-check-circle"></i> SLA: 6ч 45м</span>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Ticket 3 -->
+                        <div class="ticket-card" onclick="showTicketDetail(1245)">
+                            <div class="ticket-header">
+                                <div>
+                                    <div class="ticket-id">#1245</div>
+                                    <div class="ticket-title">Замена картриджа в кабинете 305</div>
+                                    <div class="ticket-meta">
+                                        <span><i class="bi bi-person"></i> Анна Смирнова (HR)</span>
+                                        <span><i class="bi bi-clock"></i> 1 час назад</span>
+                                        <span><i class="bi bi-tag"></i> Расходные материалы</span>
+                                    </div>
+                                </div>
+                                <div class="d-flex gap-2">
+                                    <span class="priority-badge priority-low">Низкий</span>
+                                    <span class="status-badge status-resolved">Решена</span>
+                                </div>
+                            </div>
+                            <div class="d-flex justify-content-between align-items-center">
+                                <div class="d-flex align-items-center gap-2">
+                                    <div class="avatar" style="width: 32px; height: 32px; font-size: 12px;">МК</div>
+                                    <span style="font-size: 14px;">М. Козлов</span>
+                                </div>
+                                <div class="sla-indicator">
+                                    <span style="color: #10b981;"><i class="bi bi-check-circle"></i> Выполнено за 45 мин</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Pagination -->
+                    <nav class="mt-4">
+                        <ul class="pagination justify-content-end">
+                            <li class="page-item disabled"><a class="page-link" href="#">Назад</a></li>
+                            <li class="page-item active"><a class="page-link" href="#">1</a></li>
+                            <li class="page-item"><a class="page-link" href="#">2</a></li>
+                            <li class="page-item"><a class="page-link" href="#">3</a></li>
+                            <li class="page-item"><a class="page-link" href="#">Вперёд</a></li>
+                        </ul>
+                    </nav>
+                </div>
+            </div>
+        </div>
+
+        <!-- CREATE TICKET PAGE -->
+        <div id="create-ticket" class="page-section">
+            <div class="content-card">
+                <div class="content-card-header">
+                    <h5 class="content-card-title">Создание новой заявки</h5>
+                    <button class="btn btn-outline-secondary btn-sm" onclick="showPage('tickets')">
+                        <i class="bi bi-arrow-left"></i> Назад
+                    </button>
+                </div>
+                <div class="content-card-body">
+                    <form>
+                        <div class="row">
+                            <div class="col-md-6 mb-3">
+                                <label class="form-label-custom">Заголовок *</label>
+                                <input type="text" class="form-control form-control-custom" placeholder="Краткое описание проблемы">
+                            </div>
+                            <div class="col-md-6 mb-3">
+                                <label class="form-label-custom">Категория *</label>
+                                <select class="form-select form-control-custom">
+                                    <option>Выберите категорию</option>
+                                    <option>Оборудование</option>
+                                    <option>Программное обеспечение</option>
+                                    <option>Сеть</option>
+                                    <option>Доступы</option>
+                                    <option>Расходные материалы</option>
+                                </select>
+                            </div>
+                        </div>
+
+                        <div class="mb-3">
+                            <label class="form-label-custom">Описание проблемы *</label>
+                            <textarea class="form-control form-control-custom" rows="4" placeholder="Подробное описание проблемы, шаги воспроизведения, ожидаемый результат"></textarea>
+                        </div>
+
+                        <div class="row">
+                            <div class="col-md-4 mb-3">
+                                <label class="form-label-custom">Приоритет *</label>
+                                <select class="form-select form-control-custom">
+                                    <option>Средний</option>
+                                    <option>Высокий</option>
+                                    <option>Низкий</option>
+                                    <option>Критический</option>
+                                </select>
+                            </div>
+                            <div class="col-md-4 mb-3">
+                                <label class="form-label-custom">Инициатор *</label>
+                                <input type="text" class="form-control form-control-custom" placeholder="ФИО сотрудника">
+                            </div>
+                            <div class="col-md-4 mb-3">
+                                <label class="form-label-custom">Отдел</label>
+                                <select class="form-select form-control-custom">
+                                    <option>Бухгалтерия</option>
+                                    <option>Отдел продаж</option>
+                                    <option>HR</option>
+                                    <option>IT</option>
+                                </select>
+                            </div>
+                        </div>
+
+                        <div class="row">
+                            <div class="col-md-6 mb-3">
+                                <label class="form-label-custom">Исполнитель</label>
+                                <select class="form-select form-control-custom">
+                                    <option>Автоназначение</option>
+                                    <option>И. Петров</option>
+                                    <option>А. Сидоров</option>
+                                    <option>М. Козлов</option>
+                                </select>
+                            </div>
+                            <div class="col-md-6 mb-3">
+                                <label class="form-label-custom">Срок выполнения (SLA)</label>
+                                <input type="text" class="form-control form-control-custom" value="4 часа" readonly>
+                            </div>
+                        </div>
+
+                        <div class="mb-3">
+                            <label class="form-label-custom">Вложения</label>
+                            <div class="border border-dashed rounded p-4 text-center" style="border-style: dashed !important; background: #f8fafc;">
+                                <i class="bi bi-cloud-upload" style="font-size: 32px; color: #94a3b8;"></i>
+                                <p class="mb-0 mt-2 text-muted">Перетащите файлы сюда или нажмите для выбора</p>
+                                <small class="text-muted">Максимальный размер: 10MB</small>
+                            </div>
+                        </div>
+
+                        <div class="d-flex gap-2 justify-content-end">
+                            <button type="button" class="btn btn-outline-secondary" onclick="showPage('tickets')">
+                                Отмена
+                            </button>
+                            <button type="button" class="btn btn-primary-custom" onclick="alert('Заявка #1248 создана!'); showPage('tickets');">
+                                <i class="bi bi-check"></i> Создать заявку
+                            </button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+
+        <!-- ANALYTICS PAGE -->
+        <div id="analytics" class="page-section">
+            <div class="row">
+                <div class="col-md-6">
+                    <div class="content-card">
+                        <div class="content-card-header">
+                            <h5 class="content-card-title">Заявки по категориям</h5>
+                        </div>
+                        <div class="content-card-body">
+                            <div id="categoryChart" class="chart-container"></div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-6">
+                    <div class="content-card">
+                        <div class="content-card-header">
+                            <h5 class="content-card-title">Нагрузка на исполнителей</h5>
+                        </div>
+                        <div class="content-card-body">
+                            <div id="loadChart" class="chart-container"></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="content-card">
+                <div class="content-card-header">
+                    <h5 class="content-card-title">Время решения заявок</h5>
+                </div>
+                <div class="content-card-body">
+                    <div id="resolutionChart" class="chart-container"></div>
+                </div>
+            </div>
+        </div>
+
+        <!-- OTHER PAGES (Placeholders) -->
+        <div id="reports" class="page-section">
+            <div class="content-card">
+                <div class="content-card-body text-center py-5">
+                    <i class="bi bi-file-earmark-bar-graph" style="font-size: 64px; color: #cbd5e1;"></i>
+                    <h4 class="mt-3">Отчёты</h4>
+                    <p class="text-muted">Здесь будет формироваться отчётность по заявкам</p>
+                    <button class="btn btn-primary-custom mt-3">
+                        <i class="bi bi-download"></i> Скачать отчёт за месяц
+                    </button>
+                </div>
+            </div>
+        </div>
+
+        <div id="users" class="page-section">
+            <div class="content-card">
+                <div class="content-card-body text-center py-5">
+                    <i class="bi bi-people" style="font-size: 64px; color: #cbd5e1;"></i>
+                    <h4 class="mt-3">Сотрудники</h4>
+                    <p class="text-muted">Управление исполнителями и их компетенциями</p>
+                </div>
+            </div>
+        </div>
+
+        <div id="settings" class="page-section">
+            <div class="content-card">
+                <div class="content-card-body text-center py-5">
+                    <i class="bi bi-gear" style="font-size: 64px; color: #cbd5e1;"></i>
+                    <h4 class="mt-3">Настройки системы</h4>
+                    <p class="text-muted">Настройка SLA, категорий, рабочих процессов</p>
+                </div>
+            </div>
+        </div>
+
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    <script>
+        // Navigation
+        function showPage(pageId) {
+            // Hide all pages
+            document.querySelectorAll('.page-section').forEach(page => {
+                page.classList.remove('active');
+            });
+            
+            // Show selected page
+            document.getElementById(pageId).classList.add('active');
+            
+            // Update sidebar active state
+            document.querySelectorAll('.sidebar-menu a').forEach(link => {
+                link.classList.remove('active');
+            });
+            event.target.closest('a')?.classList.add('active');
+            
+            // Update title
+            const titles = {
+                'dashboard': 'Дашборд',
+                'tickets': 'Заявки',
+                'create-ticket': 'Создание заявки',
+                'analytics': 'Аналитика',
+                'reports': 'Отчёты',
+                'users': 'Сотрудники',
+                'settings': 'Настройки'
+            };
+            document.getElementById('page-title').textContent = titles[pageId];
+            
+            // Initialize charts if dashboard or analytics
+            if (pageId === 'dashboard') {
+                initDashboardCharts();
+            } else if (pageId === 'analytics') {
+                initAnalyticsCharts();
+            }
+        }
+
+        // Initialize Dashboard Charts
+        function initDashboardCharts() {
+            // Tickets Trend Chart
+            const ticketsTrace = {
+                x: ['01.03', '05.03', '10.03', '15.03', '20.03', '25.03', '30.03'],
+                y: [12, 19, 15, 25, 22, 30, 28],
+                type: 'scatter',
+                mode: 'lines+markers',
+                line: { color: '#2563eb', width: 3 },
+                marker: { size: 8, color: '#2563eb' },
+                fill: 'tozeroy',
+                fillcolor: 'rgba(37, 99, 235, 0.1)'
+            };
+
+            const ticketsLayout = {
+                paper_bgcolor: 'rgba(0,0,0,0)',
+                plot_bgcolor: 'rgba(0,0,0,0)',
+                margin: { t: 20, r: 20, l: 50, b: 50 },
+                xaxis: { gridcolor: '#e2e8f0' },
+                yaxis: { gridcolor: '#e2e8f0' },
+                font: { family: 'Segoe UI' }
+            };
+
+            Plotly.newPlot('ticketsChart', [ticketsTrace], ticketsLayout, {responsive: true});
+
+            // Status Distribution Chart
+            const statusTrace = {
+                values: [45, 24, 65, 22],
+                labels: ['Новые', 'В работе', 'Решены', 'Закрыты'],
+                type: 'pie',
+                hole: 0.4,
+                marker: {
+                    colors: ['#3b82f6', '#f59e0b', '#10b981', '#64748b']
+                },
+                textinfo: 'label+percent',
+                insidetextorientation: 'radial'
+            };
+
+            const statusLayout = {
+                paper_bgcolor: 'rgba(0,0,0,0)',
+                showlegend: true,
+                legend: { orientation: 'h', y: -0.1 },
+                margin: { t: 20, r: 20, l: 20, b: 20 },
+                font: { family: 'Segoe UI' }
+            };
+
+            Plotly.newPlot('statusChart', [statusTrace], statusLayout, {responsive: true});
+        }
+
+        // Initialize Analytics Charts
+        function initAnalyticsCharts() {
+            // Category Chart
+            const categoryTrace = {
+                x: ['Оборудование', 'ПО', 'Сеть', 'Доступы', 'Расходники'],
+                y: [35, 28, 22, 18, 12],
+                type: 'bar',
+                marker: {
+                    color: ['#2563eb', '#10b981', '#f59e0b', '#ef4444', '#8b5cf6'],
+                    borderRadius: 6
+                }
+            };
+
+            const categoryLayout = {
+                paper_bgcolor: 'rgba(0,0,0,0)',
+                plot_bgcolor: 'rgba(0,0,0,0)',
+                margin: { t: 20, r: 20, l: 50, b: 80 },
+                xaxis: { tickangle: -45 },
+                yaxis: { gridcolor: '#e2e8f0' },
+                font: { family: 'Segoe UI' },
+                showlegend: false
+            };
+
+            Plotly.newPlot('categoryChart', [categoryTrace], categoryLayout, {responsive: true});
+
+            // Load Chart
+            const loadTrace = {
+                values: [45, 32, 28],
+                labels: ['И. Петров', 'А. Сидоров', 'М. Козлов'],
+                type: 'pie',
+                hole: 0.4,
+                marker: {
+                    colors: ['#2563eb', '#10b981', '#f59e0b']
+                }
+            };
+
+            const loadLayout = {
+                paper_bgcolor: 'rgba(0,0,0,0)',
+                showlegend: true,
+                legend: { orientation: 'h', y: -0.1 },
+                margin: { t: 20, r: 20, l: 20, b: 20 },
+                font: { family: 'Segoe UI' }
+            };
+
+            Plotly.newPlot('loadChart', [loadTrace], loadLayout, {responsive: true});
+
+            // Resolution Time Chart
+            const resolutionTrace = {
+                x: ['Пн', 'Вт', 'Ср', 'Чт', 'Пт', 'Сб', 'Вс'],
+                y: [2.5, 3.2, 2.8, 4.1, 3.5, 1.2, 0.8],
+                type: 'scatter',
+                mode: 'lines+markers',
+                line: { color: '#10b981', width: 3 },
+                marker: { size: 8, color: '#10b981' },
+                fill: 'tozeroy',
+                fillcolor: 'rgba(16, 185, 129, 0.1)'
+            };
+
+            const resolutionLayout = {
+                paper_bgcolor: 'rgba(0,0,0,0)',
+                plot_bgcolor: 'rgba(0,0,0,0)',
+                margin: { t: 20, r: 20, l: 50, b: 50 },
+                xaxis: { gridcolor: '#e2e8f0' },
+                yaxis: { 
+                    gridcolor: '#e2e8f0',
+                    title: 'Часы'
+                },
+                font: { family: 'Segoe UI' }
+            };
+
+            Plotly.newPlot('resolutionChart', [resolutionTrace], resolutionLayout, {responsive: true});
+        }
+
+        // Show Ticket Detail
+        function showTicketDetail(ticketId) {
+            alert(`Открытие детальной карточки заявки #${ticketId}\n\nЗдесь будет полная информация о заявке:\n- История изменений\n- Комментарии\n- Вложения\n- Время работы`);
+        }
+
+        // Initialize dashboard on load
+        window.addEventListener('load', () => {
+            initDashboardCharts();
+        });
+
+        // Handle window resize
+        window.addEventListener('resize', () => {
+            Plotly.Plots.resize('ticketsChart');
+            Plotly.Plots.resize('statusChart');
+        });
+    </script>
+</body>
+</html>
