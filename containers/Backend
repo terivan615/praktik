@@ -1,0 +1,13 @@
+api:
+  build:
+    context: .
+    dockerfile: Server/Dockerfile
+  ports:
+    - "5000:8080"
+  environment:
+    - ASPNETCORE_ENVIRONMENT=Production
+    - ConnectionStrings__DefaultConnection=Host=postgres;Database=jira_db;Username=admin;Password=secret
+  depends_on:
+    postgres:
+      condition: service_healthy
+  restart: unless-stopped
