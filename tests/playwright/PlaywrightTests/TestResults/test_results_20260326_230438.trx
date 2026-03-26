@@ -1,0 +1,176 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<TestRun id="800b2728-88c4-4ca0-85e4-5e1232578ac8" name="ivah22@ARCH-GAMES 2026-03-26 23:04:41" runUser="arch-games\ivah22" xmlns="http://microsoft.com/schemas/VisualStudio/TeamTest/2010">
+  <Times creation="2026-03-26T23:04:41.4093140+03:00" queuing="2026-03-26T23:04:41.4093141+03:00" start="2026-03-26T23:04:39.6776222+03:00" finish="2026-03-26T23:04:52.5041247+03:00" />
+  <TestSettings name="default" id="a4cb1983-b44d-4f56-a359-211c69cc50ad">
+    <Deployment runDeploymentRoot="ivah22_ARCH-GAMES_2026-03-26_23_04_41" />
+  </TestSettings>
+  <Results>
+    <UnitTestResult executionId="8cc0a84b-c81c-4224-9556-c1123f8f4592" testId="3fa6efbe-f6fd-2c4a-132a-48a0275b79ab" testName="TicketTypes_ShouldHaveDifferentColors" computerName="ARCH-GAMES" duration="00:00:00.3742679" startTime="2026-03-26T23:04:50.3353547+03:00" endTime="2026-03-26T23:04:50.7097306+03:00" testType="13cdc9d9-ddb5-4fa4-a97d-d965ccfc6d4b" outcome="Passed" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d" relativeResultsDirectory="8cc0a84b-c81c-4224-9556-c1123f8f4592" />
+    <UnitTestResult executionId="b83c6700-99f3-4665-995f-a68433d672fc" testId="87dfb734-24cd-e3dc-a5f0-24700a739234" testName="DragAndDrop_ShouldMoveTicket" computerName="ARCH-GAMES" duration="00:00:00.9744275" startTime="2026-03-26T23:04:51.4786517+03:00" endTime="2026-03-26T23:04:52.4537481+03:00" testType="13cdc9d9-ddb5-4fa4-a97d-d965ccfc6d4b" outcome="Passed" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d" relativeResultsDirectory="b83c6700-99f3-4665-995f-a68433d672fc" />
+    <UnitTestResult executionId="d3503e38-d055-420e-8f8b-ee5d08b1fd3f" testId="5880d002-b504-62cb-6478-b95de2cc7c98" testName="SearchInput_ShouldExist" computerName="ARCH-GAMES" duration="00:00:00.3123291" startTime="2026-03-26T23:04:42.3704536+03:00" endTime="2026-03-26T23:04:42.6829362+03:00" testType="13cdc9d9-ddb5-4fa4-a97d-d965ccfc6d4b" outcome="Passed" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d" relativeResultsDirectory="d3503e38-d055-420e-8f8b-ee5d08b1fd3f" />
+    <UnitTestResult executionId="4832d28e-d85c-43be-8355-ba21a8f15ed7" testId="b0912e0d-d5ef-bb03-7c40-e2255106d4cf" testName="ClickNewTicketButton_ShouldOpenModal" computerName="ARCH-GAMES" duration="00:00:00.4318359" startTime="2026-03-26T23:04:42.6830112+03:00" endTime="2026-03-26T23:04:43.1150454+03:00" testType="13cdc9d9-ddb5-4fa4-a97d-d965ccfc6d4b" outcome="Passed" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d" relativeResultsDirectory="4832d28e-d85c-43be-8355-ba21a8f15ed7" />
+    <UnitTestResult executionId="545e3813-b37f-4049-a67d-7e29ea5e5926" testId="8e36b50c-4527-e1fc-aa01-48bd03247d10" testName="CloseModal_WithCancelButton_ShouldClose" computerName="ARCH-GAMES" duration="00:00:00.4061090" startTime="2026-03-26T23:04:43.9813961+03:00" endTime="2026-03-26T23:04:44.3876779+03:00" testType="13cdc9d9-ddb5-4fa4-a97d-d965ccfc6d4b" outcome="Passed" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d" relativeResultsDirectory="545e3813-b37f-4049-a67d-7e29ea5e5926" />
+    <UnitTestResult executionId="f7cabf20-dd56-44b8-a482-67c470edc6bd" testId="7b0ea7dd-a1d9-f5d3-6cfd-9ef28de659b7" testName="CreateTicket_WithoutTitle_ShouldShowError" computerName="ARCH-GAMES" duration="00:00:00.4140397" startTime="2026-03-26T23:04:49.1244237+03:00" endTime="2026-03-26T23:04:49.5385811+03:00" testType="13cdc9d9-ddb5-4fa4-a97d-d965ccfc6d4b" outcome="Passed" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d" relativeResultsDirectory="f7cabf20-dd56-44b8-a482-67c470edc6bd" />
+    <UnitTestResult executionId="2e9f5b11-2a0d-498d-b89f-2e6ef3faa59d" testId="ab18945a-1202-56c6-3bcf-7b73721c4e77" testName="TicketCard_ShouldHaveTypeIndicator" computerName="ARCH-GAMES" duration="00:00:00.4053434" startTime="2026-03-26T23:04:47.4240734+03:00" endTime="2026-03-26T23:04:47.8296410+03:00" testType="13cdc9d9-ddb5-4fa4-a97d-d965ccfc6d4b" outcome="Passed" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d" relativeResultsDirectory="2e9f5b11-2a0d-498d-b89f-2e6ef3faa59d" />
+    <UnitTestResult executionId="0f595a6b-5b59-4172-9d09-d7b94b5eb994" testId="d1c3135f-f970-6c73-fb7b-966de830f520" testName="CloseModal_WithXButton_ShouldClose" computerName="ARCH-GAMES" duration="00:00:00.3828545" startTime="2026-03-26T23:04:44.3877483+03:00" endTime="2026-03-26T23:04:44.7708216+03:00" testType="13cdc9d9-ddb5-4fa4-a97d-d965ccfc6d4b" outcome="Passed" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d" relativeResultsDirectory="0f595a6b-5b59-4172-9d09-d7b94b5eb994" />
+    <UnitTestResult executionId="0eccfa65-0ab8-45ae-a633-4c55a0e8eead" testId="a88eab90-0b70-88ce-3051-ba87c1fb8560" testName="TicketCard_ShouldHavePriorityIndicator" computerName="ARCH-GAMES" duration="00:00:00.3927919" startTime="2026-03-26T23:04:47.8297026+03:00" endTime="2026-03-26T23:04:48.2226289+03:00" testType="13cdc9d9-ddb5-4fa4-a97d-d965ccfc6d4b" outcome="Passed" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d" relativeResultsDirectory="0eccfa65-0ab8-45ae-a633-4c55a0e8eead" />
+    <UnitTestResult executionId="cc65e636-b8b4-4d17-b01a-b644d00fa3e9" testId="d1b3d4d0-4545-4bf7-214d-598d4a0a4e88" testName="NewTicketButton_ShouldExist" computerName="ARCH-GAMES" duration="00:00:00.3984700" startTime="2026-03-26T23:04:41.9717041+03:00" endTime="2026-03-26T23:04:42.3703617+03:00" testType="13cdc9d9-ddb5-4fa4-a97d-d965ccfc6d4b" outcome="Passed" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d" relativeResultsDirectory="cc65e636-b8b4-4d17-b01a-b644d00fa3e9" />
+    <UnitTestResult executionId="879c61f5-54f8-40b6-8eba-195b01a4aaae" testId="02a98e16-ab3d-a2b9-dfe9-efd3ca06d2c4" testName="FormSelects_ShouldHaveCorrectOptions" computerName="ARCH-GAMES" duration="00:00:00.3580504" startTime="2026-03-26T23:04:51.1204268+03:00" endTime="2026-03-26T23:04:51.4785796+03:00" testType="13cdc9d9-ddb5-4fa4-a97d-d965ccfc6d4b" outcome="Passed" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d" relativeResultsDirectory="879c61f5-54f8-40b6-8eba-195b01a4aaae" />
+    <UnitTestResult executionId="2d2b1f78-c4fb-4533-88cc-be32a2b386fc" testId="79824fec-19af-5f06-463b-392b965abeae" testName="CreateNewTicket_ShouldAddToBoard" computerName="ARCH-GAMES" duration="00:00:00.4793653" startTime="2026-03-26T23:04:43.5018168+03:00" endTime="2026-03-26T23:04:43.9813231+03:00" testType="13cdc9d9-ddb5-4fa4-a97d-d965ccfc6d4b" outcome="Passed" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d" relativeResultsDirectory="2d2b1f78-c4fb-4533-88cc-be32a2b386fc" />
+    <UnitTestResult executionId="4b6fc87f-043d-4bd9-9e2a-9bf46552ef02" testId="4b9bf537-917b-0c4a-5c53-d0280be1db83" testName="Modal_ShouldHaveAllFormFields" computerName="ARCH-GAMES" duration="00:00:00.3864710" startTime="2026-03-26T23:04:43.1151185+03:00" endTime="2026-03-26T23:04:43.5017506+03:00" testType="13cdc9d9-ddb5-4fa4-a97d-d965ccfc6d4b" outcome="Passed" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d" relativeResultsDirectory="4b6fc87f-043d-4bd9-9e2a-9bf46552ef02" />
+    <UnitTestResult executionId="06e01c68-941a-48f4-874a-df1bdf2a5e23" testId="bce0860d-3270-c9d3-db9c-d1e596509b8e" testName="EditTicket_ShouldUpdateTicket" computerName="ARCH-GAMES" duration="00:00:00.4288691" startTime="2026-03-26T23:04:48.6953575+03:00" endTime="2026-03-26T23:04:49.1243639+03:00" testType="13cdc9d9-ddb5-4fa4-a97d-d965ccfc6d4b" outcome="Passed" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d" relativeResultsDirectory="06e01c68-941a-48f4-874a-df1bdf2a5e23" />
+    <UnitTestResult executionId="6620fa38-a7c6-4b11-96a5-1b7bea15f586" testId="0909253e-ab64-6d22-1270-88dc8a1341d0" testName="Columns_ShouldHaveCorrectNames" computerName="ARCH-GAMES" duration="00:00:00.4074400" startTime="2026-03-26T23:04:41.5639896+03:00" endTime="2026-03-26T23:04:41.9716183+03:00" testType="13cdc9d9-ddb5-4fa4-a97d-d965ccfc6d4b" outcome="Passed" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d" relativeResultsDirectory="6620fa38-a7c6-4b11-96a5-1b7bea15f586" />
+    <UnitTestResult executionId="77fecc07-829d-458f-b875-f488b17dce16" testId="a1b4fbb2-54ed-3ce5-2d95-6984d7b51553" testName="Board_ShouldHaveFourColumns" computerName="ARCH-GAMES" duration="00:00:00.3765754" startTime="2026-03-26T23:04:41.1871243+03:00" endTime="2026-03-26T23:04:41.5639192+03:00" testType="13cdc9d9-ddb5-4fa4-a97d-d965ccfc6d4b" outcome="Passed" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d" relativeResultsDirectory="77fecc07-829d-458f-b875-f488b17dce16" />
+    <UnitTestResult executionId="952a8fa5-374c-425a-8ab2-68a4b6c9a754" testId="bf001342-0f84-96d7-80db-92464974ef89" testName="StatusBar_ShouldShowCorrectCounts" computerName="ARCH-GAMES" duration="00:00:00.3819563" startTime="2026-03-26T23:04:47.0416541+03:00" endTime="2026-03-26T23:04:47.4237809+03:00" testType="13cdc9d9-ddb5-4fa4-a97d-d965ccfc6d4b" outcome="Passed" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d" relativeResultsDirectory="952a8fa5-374c-425a-8ab2-68a4b6c9a754" />
+    <UnitTestResult executionId="3324f3a2-4286-4c9f-bfbf-00f772e33d03" testId="6f6cf876-4b78-eaa2-b5ea-e808f31e7053" testName="BlockedTicket_ShouldShowIndicator" computerName="ARCH-GAMES" duration="00:00:00.4152087" startTime="2026-03-26T23:04:49.5386396+03:00" endTime="2026-03-26T23:04:49.9539816+03:00" testType="13cdc9d9-ddb5-4fa4-a97d-d965ccfc6d4b" outcome="Passed" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d" relativeResultsDirectory="3324f3a2-4286-4c9f-bfbf-00f772e33d03" />
+    <UnitTestResult executionId="d66d43a4-68c8-4aba-ba70-c93b3f435512" testId="40016c84-b8f1-134b-c944-51d1942ea12e" testName="Header_ShouldDisplayLogo" computerName="ARCH-GAMES" duration="00:00:00.3665524" startTime="2026-03-26T23:04:40.8199194+03:00" endTime="2026-03-26T23:04:41.1866629+03:00" testType="13cdc9d9-ddb5-4fa4-a97d-d965ccfc6d4b" outcome="Passed" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d" relativeResultsDirectory="d66d43a4-68c8-4aba-ba70-c93b3f435512" />
+    <UnitTestResult executionId="30789038-8453-4ce5-b8e0-9a57cd01c0c9" testId="5a6a6575-009c-5836-fd42-2f24de24046d" testName="ClickOnCard_ShouldOpenEditModal" computerName="ARCH-GAMES" duration="00:00:00.4724251" startTime="2026-03-26T23:04:48.2227133+03:00" endTime="2026-03-26T23:04:48.6952741+03:00" testType="13cdc9d9-ddb5-4fa4-a97d-d965ccfc6d4b" outcome="Passed" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d" relativeResultsDirectory="30789038-8453-4ce5-b8e0-9a57cd01c0c9" />
+    <UnitTestResult executionId="126c7a36-128c-492e-a759-607baf6b3332" testId="75761510-9efa-c757-0524-0d43924776c8" testName="Modal_WithBlockedCheckbox_ShouldWork" computerName="ARCH-GAMES" duration="00:00:00.4104669" startTime="2026-03-26T23:04:50.7097914+03:00" endTime="2026-03-26T23:04:51.1203692+03:00" testType="13cdc9d9-ddb5-4fa4-a97d-d965ccfc6d4b" outcome="Passed" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d" relativeResultsDirectory="126c7a36-128c-492e-a759-607baf6b3332" />
+    <UnitTestResult executionId="2be9e409-83d5-482f-8f6c-574beda10693" testId="24d7a67c-14f3-2ec2-ec3c-b0e75ccadb01" testName="ClearSearch_ShouldShowAllTickets" computerName="ARCH-GAMES" duration="00:00:00.9596325" startTime="2026-03-26T23:04:46.0817661+03:00" endTime="2026-03-26T23:04:47.0415739+03:00" testType="13cdc9d9-ddb5-4fa4-a97d-d965ccfc6d4b" outcome="Passed" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d" relativeResultsDirectory="2be9e409-83d5-482f-8f6c-574beda10693" />
+    <UnitTestResult executionId="f82e6482-7f54-4cce-9d34-dd685df460c1" testId="769dbffa-02c2-4f1f-cf9f-1578c00054dc" testName="PageTitle_ShouldBeCorrect" computerName="ARCH-GAMES" duration="00:00:00.9016347" startTime="2026-03-26T23:04:39.9097876+03:00" endTime="2026-03-26T23:04:40.8177369+03:00" testType="13cdc9d9-ddb5-4fa4-a97d-d965ccfc6d4b" outcome="Passed" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d" relativeResultsDirectory="f82e6482-7f54-4cce-9d34-dd685df460c1" />
+    <UnitTestResult executionId="52094501-3cfa-40c0-9873-4fb772d69e96" testId="fa03fd5a-7d20-ecd3-e8c3-8d4fb48b8d99" testName="CloseModal_WithEscapeKey_ShouldClose" computerName="ARCH-GAMES" duration="00:00:00.4417574" startTime="2026-03-26T23:04:44.7708916+03:00" endTime="2026-03-26T23:04:45.2128083+03:00" testType="13cdc9d9-ddb5-4fa4-a97d-d965ccfc6d4b" outcome="Passed" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d" relativeResultsDirectory="52094501-3cfa-40c0-9873-4fb772d69e96" />
+    <UnitTestResult executionId="d0800eb2-ee38-4ee3-82dc-5459e9323f22" testId="8c170378-964c-3ecb-b7f4-836e87441665" testName="Search_ShouldFilterTickets" computerName="ARCH-GAMES" duration="00:00:00.8686260" startTime="2026-03-26T23:04:45.2128688+03:00" endTime="2026-03-26T23:04:46.0816353+03:00" testType="13cdc9d9-ddb5-4fa4-a97d-d965ccfc6d4b" outcome="Passed" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d" relativeResultsDirectory="d0800eb2-ee38-4ee3-82dc-5459e9323f22" />
+    <UnitTestResult executionId="eec7f9c0-52a0-4922-ba45-956fe7d0431e" testId="dc1b1f0a-d10b-d381-5a5c-f5d1055d9e86" testName="ColumnCount_ShouldMatchTicketCount" computerName="ARCH-GAMES" duration="00:00:00.3811180" startTime="2026-03-26T23:04:49.9540462+03:00" endTime="2026-03-26T23:04:50.3352952+03:00" testType="13cdc9d9-ddb5-4fa4-a97d-d965ccfc6d4b" outcome="Passed" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d" relativeResultsDirectory="eec7f9c0-52a0-4922-ba45-956fe7d0431e" />
+  </Results>
+  <TestDefinitions>
+    <UnitTest name="Modal_ShouldHaveAllFormFields" storage="d:\users\ivah22\desktop\exam\playwrighttests\bin\debug\net8.0\asutechtests.dll" id="4b9bf537-917b-0c4a-5c53-d0280be1db83">
+      <Execution id="4b6fc87f-043d-4bd9-9e2a-9bf46552ef02" />
+      <TestMethod codeBase="D:\Users\ivah22\Desktop\exam\PlaywrightTests\bin\Debug\net8.0\AsuTechTests.dll" adapterTypeName="executor://mstestadapter/v2" className="AsuTechTests.AsuTechBoardTests" name="Modal_ShouldHaveAllFormFields" />
+    </UnitTest>
+    <UnitTest name="CreateNewTicket_ShouldAddToBoard" storage="d:\users\ivah22\desktop\exam\playwrighttests\bin\debug\net8.0\asutechtests.dll" id="79824fec-19af-5f06-463b-392b965abeae">
+      <Execution id="2d2b1f78-c4fb-4533-88cc-be32a2b386fc" />
+      <TestMethod codeBase="D:\Users\ivah22\Desktop\exam\PlaywrightTests\bin\Debug\net8.0\AsuTechTests.dll" adapterTypeName="executor://mstestadapter/v2" className="AsuTechTests.AsuTechBoardTests" name="CreateNewTicket_ShouldAddToBoard" />
+    </UnitTest>
+    <UnitTest name="StatusBar_ShouldShowCorrectCounts" storage="d:\users\ivah22\desktop\exam\playwrighttests\bin\debug\net8.0\asutechtests.dll" id="bf001342-0f84-96d7-80db-92464974ef89">
+      <Execution id="952a8fa5-374c-425a-8ab2-68a4b6c9a754" />
+      <TestMethod codeBase="D:\Users\ivah22\Desktop\exam\PlaywrightTests\bin\Debug\net8.0\AsuTechTests.dll" adapterTypeName="executor://mstestadapter/v2" className="AsuTechTests.AsuTechBoardTests" name="StatusBar_ShouldShowCorrectCounts" />
+    </UnitTest>
+    <UnitTest name="TicketCard_ShouldHavePriorityIndicator" storage="d:\users\ivah22\desktop\exam\playwrighttests\bin\debug\net8.0\asutechtests.dll" id="a88eab90-0b70-88ce-3051-ba87c1fb8560">
+      <Execution id="0eccfa65-0ab8-45ae-a633-4c55a0e8eead" />
+      <TestMethod codeBase="D:\Users\ivah22\Desktop\exam\PlaywrightTests\bin\Debug\net8.0\AsuTechTests.dll" adapterTypeName="executor://mstestadapter/v2" className="AsuTechTests.AsuTechBoardTests" name="TicketCard_ShouldHavePriorityIndicator" />
+    </UnitTest>
+    <UnitTest name="EditTicket_ShouldUpdateTicket" storage="d:\users\ivah22\desktop\exam\playwrighttests\bin\debug\net8.0\asutechtests.dll" id="bce0860d-3270-c9d3-db9c-d1e596509b8e">
+      <Execution id="06e01c68-941a-48f4-874a-df1bdf2a5e23" />
+      <TestMethod codeBase="D:\Users\ivah22\Desktop\exam\PlaywrightTests\bin\Debug\net8.0\AsuTechTests.dll" adapterTypeName="executor://mstestadapter/v2" className="AsuTechTests.AsuTechBoardTests" name="EditTicket_ShouldUpdateTicket" />
+    </UnitTest>
+    <UnitTest name="Board_ShouldHaveFourColumns" storage="d:\users\ivah22\desktop\exam\playwrighttests\bin\debug\net8.0\asutechtests.dll" id="a1b4fbb2-54ed-3ce5-2d95-6984d7b51553">
+      <Execution id="77fecc07-829d-458f-b875-f488b17dce16" />
+      <TestMethod codeBase="D:\Users\ivah22\Desktop\exam\PlaywrightTests\bin\Debug\net8.0\AsuTechTests.dll" adapterTypeName="executor://mstestadapter/v2" className="AsuTechTests.AsuTechBoardTests" name="Board_ShouldHaveFourColumns" />
+    </UnitTest>
+    <UnitTest name="SearchInput_ShouldExist" storage="d:\users\ivah22\desktop\exam\playwrighttests\bin\debug\net8.0\asutechtests.dll" id="5880d002-b504-62cb-6478-b95de2cc7c98">
+      <Execution id="d3503e38-d055-420e-8f8b-ee5d08b1fd3f" />
+      <TestMethod codeBase="D:\Users\ivah22\Desktop\exam\PlaywrightTests\bin\Debug\net8.0\AsuTechTests.dll" adapterTypeName="executor://mstestadapter/v2" className="AsuTechTests.AsuTechBoardTests" name="SearchInput_ShouldExist" />
+    </UnitTest>
+    <UnitTest name="Header_ShouldDisplayLogo" storage="d:\users\ivah22\desktop\exam\playwrighttests\bin\debug\net8.0\asutechtests.dll" id="40016c84-b8f1-134b-c944-51d1942ea12e">
+      <Execution id="d66d43a4-68c8-4aba-ba70-c93b3f435512" />
+      <TestMethod codeBase="D:\Users\ivah22\Desktop\exam\PlaywrightTests\bin\Debug\net8.0\AsuTechTests.dll" adapterTypeName="executor://mstestadapter/v2" className="AsuTechTests.AsuTechBoardTests" name="Header_ShouldDisplayLogo" />
+    </UnitTest>
+    <UnitTest name="CreateTicket_WithoutTitle_ShouldShowError" storage="d:\users\ivah22\desktop\exam\playwrighttests\bin\debug\net8.0\asutechtests.dll" id="7b0ea7dd-a1d9-f5d3-6cfd-9ef28de659b7">
+      <Execution id="f7cabf20-dd56-44b8-a482-67c470edc6bd" />
+      <TestMethod codeBase="D:\Users\ivah22\Desktop\exam\PlaywrightTests\bin\Debug\net8.0\AsuTechTests.dll" adapterTypeName="executor://mstestadapter/v2" className="AsuTechTests.AsuTechBoardTests" name="CreateTicket_WithoutTitle_ShouldShowError" />
+    </UnitTest>
+    <UnitTest name="ClickNewTicketButton_ShouldOpenModal" storage="d:\users\ivah22\desktop\exam\playwrighttests\bin\debug\net8.0\asutechtests.dll" id="b0912e0d-d5ef-bb03-7c40-e2255106d4cf">
+      <Execution id="4832d28e-d85c-43be-8355-ba21a8f15ed7" />
+      <TestMethod codeBase="D:\Users\ivah22\Desktop\exam\PlaywrightTests\bin\Debug\net8.0\AsuTechTests.dll" adapterTypeName="executor://mstestadapter/v2" className="AsuTechTests.AsuTechBoardTests" name="ClickNewTicketButton_ShouldOpenModal" />
+    </UnitTest>
+    <UnitTest name="FormSelects_ShouldHaveCorrectOptions" storage="d:\users\ivah22\desktop\exam\playwrighttests\bin\debug\net8.0\asutechtests.dll" id="02a98e16-ab3d-a2b9-dfe9-efd3ca06d2c4">
+      <Execution id="879c61f5-54f8-40b6-8eba-195b01a4aaae" />
+      <TestMethod codeBase="D:\Users\ivah22\Desktop\exam\PlaywrightTests\bin\Debug\net8.0\AsuTechTests.dll" adapterTypeName="executor://mstestadapter/v2" className="AsuTechTests.AsuTechBoardTests" name="FormSelects_ShouldHaveCorrectOptions" />
+    </UnitTest>
+    <UnitTest name="DragAndDrop_ShouldMoveTicket" storage="d:\users\ivah22\desktop\exam\playwrighttests\bin\debug\net8.0\asutechtests.dll" id="87dfb734-24cd-e3dc-a5f0-24700a739234">
+      <Execution id="b83c6700-99f3-4665-995f-a68433d672fc" />
+      <TestMethod codeBase="D:\Users\ivah22\Desktop\exam\PlaywrightTests\bin\Debug\net8.0\AsuTechTests.dll" adapterTypeName="executor://mstestadapter/v2" className="AsuTechTests.AsuTechBoardTests" name="DragAndDrop_ShouldMoveTicket" />
+    </UnitTest>
+    <UnitTest name="BlockedTicket_ShouldShowIndicator" storage="d:\users\ivah22\desktop\exam\playwrighttests\bin\debug\net8.0\asutechtests.dll" id="6f6cf876-4b78-eaa2-b5ea-e808f31e7053">
+      <Execution id="3324f3a2-4286-4c9f-bfbf-00f772e33d03" />
+      <TestMethod codeBase="D:\Users\ivah22\Desktop\exam\PlaywrightTests\bin\Debug\net8.0\AsuTechTests.dll" adapterTypeName="executor://mstestadapter/v2" className="AsuTechTests.AsuTechBoardTests" name="BlockedTicket_ShouldShowIndicator" />
+    </UnitTest>
+    <UnitTest name="Search_ShouldFilterTickets" storage="d:\users\ivah22\desktop\exam\playwrighttests\bin\debug\net8.0\asutechtests.dll" id="8c170378-964c-3ecb-b7f4-836e87441665">
+      <Execution id="d0800eb2-ee38-4ee3-82dc-5459e9323f22" />
+      <TestMethod codeBase="D:\Users\ivah22\Desktop\exam\PlaywrightTests\bin\Debug\net8.0\AsuTechTests.dll" adapterTypeName="executor://mstestadapter/v2" className="AsuTechTests.AsuTechBoardTests" name="Search_ShouldFilterTickets" />
+    </UnitTest>
+    <UnitTest name="TicketTypes_ShouldHaveDifferentColors" storage="d:\users\ivah22\desktop\exam\playwrighttests\bin\debug\net8.0\asutechtests.dll" id="3fa6efbe-f6fd-2c4a-132a-48a0275b79ab">
+      <Execution id="8cc0a84b-c81c-4224-9556-c1123f8f4592" />
+      <TestMethod codeBase="D:\Users\ivah22\Desktop\exam\PlaywrightTests\bin\Debug\net8.0\AsuTechTests.dll" adapterTypeName="executor://mstestadapter/v2" className="AsuTechTests.AsuTechBoardTests" name="TicketTypes_ShouldHaveDifferentColors" />
+    </UnitTest>
+    <UnitTest name="ClickOnCard_ShouldOpenEditModal" storage="d:\users\ivah22\desktop\exam\playwrighttests\bin\debug\net8.0\asutechtests.dll" id="5a6a6575-009c-5836-fd42-2f24de24046d">
+      <Execution id="30789038-8453-4ce5-b8e0-9a57cd01c0c9" />
+      <TestMethod codeBase="D:\Users\ivah22\Desktop\exam\PlaywrightTests\bin\Debug\net8.0\AsuTechTests.dll" adapterTypeName="executor://mstestadapter/v2" className="AsuTechTests.AsuTechBoardTests" name="ClickOnCard_ShouldOpenEditModal" />
+    </UnitTest>
+    <UnitTest name="CloseModal_WithCancelButton_ShouldClose" storage="d:\users\ivah22\desktop\exam\playwrighttests\bin\debug\net8.0\asutechtests.dll" id="8e36b50c-4527-e1fc-aa01-48bd03247d10">
+      <Execution id="545e3813-b37f-4049-a67d-7e29ea5e5926" />
+      <TestMethod codeBase="D:\Users\ivah22\Desktop\exam\PlaywrightTests\bin\Debug\net8.0\AsuTechTests.dll" adapterTypeName="executor://mstestadapter/v2" className="AsuTechTests.AsuTechBoardTests" name="CloseModal_WithCancelButton_ShouldClose" />
+    </UnitTest>
+    <UnitTest name="TicketCard_ShouldHaveTypeIndicator" storage="d:\users\ivah22\desktop\exam\playwrighttests\bin\debug\net8.0\asutechtests.dll" id="ab18945a-1202-56c6-3bcf-7b73721c4e77">
+      <Execution id="2e9f5b11-2a0d-498d-b89f-2e6ef3faa59d" />
+      <TestMethod codeBase="D:\Users\ivah22\Desktop\exam\PlaywrightTests\bin\Debug\net8.0\AsuTechTests.dll" adapterTypeName="executor://mstestadapter/v2" className="AsuTechTests.AsuTechBoardTests" name="TicketCard_ShouldHaveTypeIndicator" />
+    </UnitTest>
+    <UnitTest name="NewTicketButton_ShouldExist" storage="d:\users\ivah22\desktop\exam\playwrighttests\bin\debug\net8.0\asutechtests.dll" id="d1b3d4d0-4545-4bf7-214d-598d4a0a4e88">
+      <Execution id="cc65e636-b8b4-4d17-b01a-b644d00fa3e9" />
+      <TestMethod codeBase="D:\Users\ivah22\Desktop\exam\PlaywrightTests\bin\Debug\net8.0\AsuTechTests.dll" adapterTypeName="executor://mstestadapter/v2" className="AsuTechTests.AsuTechBoardTests" name="NewTicketButton_ShouldExist" />
+    </UnitTest>
+    <UnitTest name="CloseModal_WithEscapeKey_ShouldClose" storage="d:\users\ivah22\desktop\exam\playwrighttests\bin\debug\net8.0\asutechtests.dll" id="fa03fd5a-7d20-ecd3-e8c3-8d4fb48b8d99">
+      <Execution id="52094501-3cfa-40c0-9873-4fb772d69e96" />
+      <TestMethod codeBase="D:\Users\ivah22\Desktop\exam\PlaywrightTests\bin\Debug\net8.0\AsuTechTests.dll" adapterTypeName="executor://mstestadapter/v2" className="AsuTechTests.AsuTechBoardTests" name="CloseModal_WithEscapeKey_ShouldClose" />
+    </UnitTest>
+    <UnitTest name="Modal_WithBlockedCheckbox_ShouldWork" storage="d:\users\ivah22\desktop\exam\playwrighttests\bin\debug\net8.0\asutechtests.dll" id="75761510-9efa-c757-0524-0d43924776c8">
+      <Execution id="126c7a36-128c-492e-a759-607baf6b3332" />
+      <TestMethod codeBase="D:\Users\ivah22\Desktop\exam\PlaywrightTests\bin\Debug\net8.0\AsuTechTests.dll" adapterTypeName="executor://mstestadapter/v2" className="AsuTechTests.AsuTechBoardTests" name="Modal_WithBlockedCheckbox_ShouldWork" />
+    </UnitTest>
+    <UnitTest name="PageTitle_ShouldBeCorrect" storage="d:\users\ivah22\desktop\exam\playwrighttests\bin\debug\net8.0\asutechtests.dll" id="769dbffa-02c2-4f1f-cf9f-1578c00054dc">
+      <Execution id="f82e6482-7f54-4cce-9d34-dd685df460c1" />
+      <TestMethod codeBase="D:\Users\ivah22\Desktop\exam\PlaywrightTests\bin\Debug\net8.0\AsuTechTests.dll" adapterTypeName="executor://mstestadapter/v2" className="AsuTechTests.AsuTechBoardTests" name="PageTitle_ShouldBeCorrect" />
+    </UnitTest>
+    <UnitTest name="CloseModal_WithXButton_ShouldClose" storage="d:\users\ivah22\desktop\exam\playwrighttests\bin\debug\net8.0\asutechtests.dll" id="d1c3135f-f970-6c73-fb7b-966de830f520">
+      <Execution id="0f595a6b-5b59-4172-9d09-d7b94b5eb994" />
+      <TestMethod codeBase="D:\Users\ivah22\Desktop\exam\PlaywrightTests\bin\Debug\net8.0\AsuTechTests.dll" adapterTypeName="executor://mstestadapter/v2" className="AsuTechTests.AsuTechBoardTests" name="CloseModal_WithXButton_ShouldClose" />
+    </UnitTest>
+    <UnitTest name="Columns_ShouldHaveCorrectNames" storage="d:\users\ivah22\desktop\exam\playwrighttests\bin\debug\net8.0\asutechtests.dll" id="0909253e-ab64-6d22-1270-88dc8a1341d0">
+      <Execution id="6620fa38-a7c6-4b11-96a5-1b7bea15f586" />
+      <TestMethod codeBase="D:\Users\ivah22\Desktop\exam\PlaywrightTests\bin\Debug\net8.0\AsuTechTests.dll" adapterTypeName="executor://mstestadapter/v2" className="AsuTechTests.AsuTechBoardTests" name="Columns_ShouldHaveCorrectNames" />
+    </UnitTest>
+    <UnitTest name="ColumnCount_ShouldMatchTicketCount" storage="d:\users\ivah22\desktop\exam\playwrighttests\bin\debug\net8.0\asutechtests.dll" id="dc1b1f0a-d10b-d381-5a5c-f5d1055d9e86">
+      <Execution id="eec7f9c0-52a0-4922-ba45-956fe7d0431e" />
+      <TestMethod codeBase="D:\Users\ivah22\Desktop\exam\PlaywrightTests\bin\Debug\net8.0\AsuTechTests.dll" adapterTypeName="executor://mstestadapter/v2" className="AsuTechTests.AsuTechBoardTests" name="ColumnCount_ShouldMatchTicketCount" />
+    </UnitTest>
+    <UnitTest name="ClearSearch_ShouldShowAllTickets" storage="d:\users\ivah22\desktop\exam\playwrighttests\bin\debug\net8.0\asutechtests.dll" id="24d7a67c-14f3-2ec2-ec3c-b0e75ccadb01">
+      <Execution id="2be9e409-83d5-482f-8f6c-574beda10693" />
+      <TestMethod codeBase="D:\Users\ivah22\Desktop\exam\PlaywrightTests\bin\Debug\net8.0\AsuTechTests.dll" adapterTypeName="executor://mstestadapter/v2" className="AsuTechTests.AsuTechBoardTests" name="ClearSearch_ShouldShowAllTickets" />
+    </UnitTest>
+  </TestDefinitions>
+  <TestEntries>
+    <TestEntry testId="3fa6efbe-f6fd-2c4a-132a-48a0275b79ab" executionId="8cc0a84b-c81c-4224-9556-c1123f8f4592" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d" />
+    <TestEntry testId="87dfb734-24cd-e3dc-a5f0-24700a739234" executionId="b83c6700-99f3-4665-995f-a68433d672fc" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d" />
+    <TestEntry testId="5880d002-b504-62cb-6478-b95de2cc7c98" executionId="d3503e38-d055-420e-8f8b-ee5d08b1fd3f" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d" />
+    <TestEntry testId="b0912e0d-d5ef-bb03-7c40-e2255106d4cf" executionId="4832d28e-d85c-43be-8355-ba21a8f15ed7" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d" />
+    <TestEntry testId="8e36b50c-4527-e1fc-aa01-48bd03247d10" executionId="545e3813-b37f-4049-a67d-7e29ea5e5926" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d" />
+    <TestEntry testId="7b0ea7dd-a1d9-f5d3-6cfd-9ef28de659b7" executionId="f7cabf20-dd56-44b8-a482-67c470edc6bd" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d" />
+    <TestEntry testId="ab18945a-1202-56c6-3bcf-7b73721c4e77" executionId="2e9f5b11-2a0d-498d-b89f-2e6ef3faa59d" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d" />
+    <TestEntry testId="d1c3135f-f970-6c73-fb7b-966de830f520" executionId="0f595a6b-5b59-4172-9d09-d7b94b5eb994" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d" />
+    <TestEntry testId="a88eab90-0b70-88ce-3051-ba87c1fb8560" executionId="0eccfa65-0ab8-45ae-a633-4c55a0e8eead" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d" />
+    <TestEntry testId="d1b3d4d0-4545-4bf7-214d-598d4a0a4e88" executionId="cc65e636-b8b4-4d17-b01a-b644d00fa3e9" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d" />
+    <TestEntry testId="02a98e16-ab3d-a2b9-dfe9-efd3ca06d2c4" executionId="879c61f5-54f8-40b6-8eba-195b01a4aaae" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d" />
+    <TestEntry testId="79824fec-19af-5f06-463b-392b965abeae" executionId="2d2b1f78-c4fb-4533-88cc-be32a2b386fc" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d" />
+    <TestEntry testId="4b9bf537-917b-0c4a-5c53-d0280be1db83" executionId="4b6fc87f-043d-4bd9-9e2a-9bf46552ef02" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d" />
+    <TestEntry testId="bce0860d-3270-c9d3-db9c-d1e596509b8e" executionId="06e01c68-941a-48f4-874a-df1bdf2a5e23" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d" />
+    <TestEntry testId="0909253e-ab64-6d22-1270-88dc8a1341d0" executionId="6620fa38-a7c6-4b11-96a5-1b7bea15f586" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d" />
+    <TestEntry testId="a1b4fbb2-54ed-3ce5-2d95-6984d7b51553" executionId="77fecc07-829d-458f-b875-f488b17dce16" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d" />
+    <TestEntry testId="bf001342-0f84-96d7-80db-92464974ef89" executionId="952a8fa5-374c-425a-8ab2-68a4b6c9a754" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d" />
+    <TestEntry testId="6f6cf876-4b78-eaa2-b5ea-e808f31e7053" executionId="3324f3a2-4286-4c9f-bfbf-00f772e33d03" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d" />
+    <TestEntry testId="40016c84-b8f1-134b-c944-51d1942ea12e" executionId="d66d43a4-68c8-4aba-ba70-c93b3f435512" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d" />
+    <TestEntry testId="5a6a6575-009c-5836-fd42-2f24de24046d" executionId="30789038-8453-4ce5-b8e0-9a57cd01c0c9" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d" />
+    <TestEntry testId="75761510-9efa-c757-0524-0d43924776c8" executionId="126c7a36-128c-492e-a759-607baf6b3332" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d" />
+    <TestEntry testId="24d7a67c-14f3-2ec2-ec3c-b0e75ccadb01" executionId="2be9e409-83d5-482f-8f6c-574beda10693" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d" />
+    <TestEntry testId="769dbffa-02c2-4f1f-cf9f-1578c00054dc" executionId="f82e6482-7f54-4cce-9d34-dd685df460c1" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d" />
+    <TestEntry testId="fa03fd5a-7d20-ecd3-e8c3-8d4fb48b8d99" executionId="52094501-3cfa-40c0-9873-4fb772d69e96" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d" />
+    <TestEntry testId="8c170378-964c-3ecb-b7f4-836e87441665" executionId="d0800eb2-ee38-4ee3-82dc-5459e9323f22" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d" />
+    <TestEntry testId="dc1b1f0a-d10b-d381-5a5c-f5d1055d9e86" executionId="eec7f9c0-52a0-4922-ba45-956fe7d0431e" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d" />
+  </TestEntries>
+  <TestLists>
+    <TestList name="Список результатов" id="8c84fa94-04c1-424b-9868-57a2d4851a1d" />
+    <TestList name="Все загруженные результаты" id="19431567-8539-422a-85d7-44ee4e166bda" />
+  </TestLists>
+  <ResultSummary outcome="Completed">
+    <Counters total="26" executed="26" passed="26" failed="0" error="0" timeout="0" aborted="0" inconclusive="0" passedButRunAborted="0" notRunnable="0" notExecuted="0" disconnected="0" warning="0" completed="0" inProgress="0" pending="0" />
+  </ResultSummary>
+</TestRun>

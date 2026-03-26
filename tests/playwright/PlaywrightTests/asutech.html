@@ -1,0 +1,995 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>АсуТех - Техподдержка</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        :root {
+            --paper: #f8f5e4;
+            --paper-shadow: #d4cfb8;
+            --board-bg: #e8e4d0;
+            --column-bg: #f0ecd8;
+            --ink: #2c2c2c;
+            --type-bug: #ef5350;
+            --type-feature: #66bb6a;
+            --type-question: #42a5f5;
+            --type-task: #ffa726;
+            --priority-critical: #ff6b6b;
+            --priority-high: #ffa726;
+            --priority-normal: #42a5f5;
+            --priority-low: #66bb6a;
+            --column-min-width: 280px;
+            --column-max-width: 350px;
+            --column-gap: 20px;
+        }
+
+        * { box-sizing: border-box; margin: 0; padding: 0; }
+        
+        html, body {
+            height: 100%;
+            overflow: hidden;
+        }
+        
+        body {
+            font-family: 'Courier New', monospace;
+            background-color: var(--board-bg);
+            background-image: 
+                repeating-linear-gradient(45deg, transparent, transparent 10px, rgba(0,0,0,.02) 10px, rgba(0,0,0,.02) 20px),
+                repeating-linear-gradient(-45deg, transparent, transparent 10px, rgba(0,0,0,.02) 10px, rgba(0,0,0,.02) 20px);
+            color: var(--ink);
+            padding: 20px;
+            display: flex;
+            flex-direction: column;
+        }
+
+        .header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 15px;
+            padding-bottom: 15px;
+            border-bottom: 2px dashed var(--paper-shadow);
+            flex-wrap: wrap;
+            gap: 15px;
+            flex-shrink: 0;
+        }
+
+        .logo {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+
+        .logo-icon {
+            font-size: 28px;
+            color: var(--type-bug);
+            background: var(--paper);
+            padding: 8px 12px;
+            border-radius: 4px;
+            box-shadow: 2px 2px 0 var(--paper-shadow);
+        }
+
+        .logo-text {
+            font-size: 24px;
+            font-weight: bold;
+            letter-spacing: 1px;
+        }
+
+        .header-actions {
+            display: flex;
+            gap: 12px;
+            align-items: center;
+        }
+
+        .btn {
+            background: var(--paper);
+            border: 2px solid var(--ink);
+            padding: 10px 18px;
+            font-family: inherit;
+            font-weight: bold;
+            cursor: pointer;
+            box-shadow: 3px 3px 0 var(--paper-shadow);
+            transition: all 0.1s;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            flex-shrink: 0;
+        }
+
+        .btn:hover {
+            transform: translate(-1px, -1px);
+            box-shadow: 4px 4px 0 var(--paper-shadow);
+        }
+
+        .btn:active {
+            transform: translate(1px, 1px);
+            box-shadow: 1px 1px 0 var(--paper-shadow);
+        }
+
+        .btn-primary {
+            background: var(--type-bug);
+            color: white;
+            border-color: var(--type-bug);
+        }
+
+        .btn-primary:hover {
+            background: #e53935;
+            border-color: #e53935;
+        }
+
+        .search-container {
+            position: relative;
+            min-width: 220px;
+            flex: 1;
+            max-width: 300px;
+        }
+
+        .search-input {
+            width: 100%;
+            padding: 10px 10px 10px 40px;
+            border: 2px solid var(--ink);
+            background: var(--paper);
+            font-family: inherit;
+            font-size: 14px;
+            box-shadow: 3px 3px 0 var(--paper-shadow);
+        }
+
+        .search-input:focus {
+            outline: none;
+            box-shadow: 3px 3px 0 var(--paper-shadow), 0 0 0 3px rgba(66, 165, 245, 0.3);
+        }
+
+        .search-icon {
+            position: absolute;
+            left: 12px;
+            top: 50%;
+            transform: translateY(-50%);
+            color: var(--ink);
+            opacity: 0.6;
+        }
+
+        .board-wrapper {
+            flex: 1;
+            display: flex;
+            align-items: flex-start;
+            justify-content: center;
+            overflow-x: auto;
+            overflow-y: hidden;
+            padding: 5px 0 15px;
+            scroll-behavior: smooth;
+            -webkit-overflow-scrolling: touch;
+        }
+
+        .board-wrapper::-webkit-scrollbar {
+            height: 12px;
+        }
+
+        .board-wrapper::-webkit-scrollbar-track {
+            background: var(--paper);
+            border: 2px solid var(--ink);
+            border-radius: 6px;
+        }
+
+        .board-wrapper::-webkit-scrollbar-thumb {
+            background: var(--ink);
+            border: 2px solid var(--paper);
+            border-radius: 6px;
+        }
+
+        .board {
+            display: flex;
+            gap: var(--column-gap);
+            padding: 0 10px;
+            min-width: max-content;
+        }
+
+        .column {
+            flex: 0 0 var(--column-min-width);
+            max-width: var(--column-max-width);
+            background: var(--column-bg);
+            border: 2px solid var(--ink);
+            border-radius: 6px;
+            display: flex;
+            flex-direction: column;
+            box-shadow: 5px 5px 0 var(--paper-shadow);
+            height: calc(100vh - 180px);
+            min-height: 400px;
+        }
+
+        .column-header {
+            padding: 12px 15px;
+            border-bottom: 2px solid var(--ink);
+            background: var(--paper);
+            font-weight: bold;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            flex-shrink: 0;
+        }
+
+        .column-count {
+            background: var(--ink);
+            color: var(--paper);
+            padding: 2px 8px;
+            border-radius: 10px;
+            font-size: 14px;
+        }
+
+        .column-content {
+            padding: 15px;
+            flex-grow: 1;
+            overflow-y: auto;
+            overflow-x: hidden;
+            min-height: 0;
+        }
+
+        .column-content::-webkit-scrollbar {
+            width: 8px;
+        }
+
+        .column-content::-webkit-scrollbar-track {
+            background: transparent;
+        }
+
+        .column-content::-webkit-scrollbar-thumb {
+            background: var(--paper-shadow);
+            border-radius: 4px;
+        }
+
+        .column-content::-webkit-scrollbar-thumb:hover {
+            background: var(--ink);
+        }
+
+        .card {
+            background: var(--paper);
+            border: 2px solid var(--ink);
+            border-radius: 4px;
+            padding: 12px;
+            margin-bottom: 12px;
+            box-shadow: 3px 3px 0 var(--paper-shadow);
+            cursor: move;
+            transition: transform 0.1s, box-shadow 0.1s;
+            position: relative;
+            break-inside: avoid;
+        }
+
+        .card:hover {
+            transform: translate(-2px, -2px);
+            box-shadow: 5px 5px 0 var(--paper-shadow);
+            z-index: 10;
+        }
+
+        .card.dragging {
+            opacity: 0.5;
+            transform: scale(0.95);
+        }
+
+        .card-header {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 8px;
+        }
+
+        .card-id {
+            font-size: 12px;
+            color: #666;
+            font-weight: bold;
+        }
+
+        .card-type-icon {
+            font-size: 14px;
+            font-weight: bold;
+        }
+
+        .card-title {
+            font-weight: bold;
+            margin-bottom: 8px;
+            font-size: 15px;
+            line-height: 1.3;
+            word-wrap: break-word;
+        }
+
+        .card-meta {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            font-size: 12px;
+            margin-top: 8px;
+            padding-top: 8px;
+            border-top: 1px dashed var(--paper-shadow);
+            flex-wrap: wrap;
+            gap: 5px;
+        }
+
+        .priority-dot {
+            width: 12px;
+            height: 12px;
+            border-radius: 50%;
+            display: inline-block;
+            margin-right: 5px;
+            flex-shrink: 0;
+        }
+
+        .assignee {
+            display: flex;
+            align-items: center;
+            gap: 5px;
+            flex-shrink: 0;
+        }
+
+        .assignee-avatar {
+            width: 24px;
+            height: 24px;
+            border-radius: 50%;
+            background: var(--ink);
+            color: var(--paper);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 10px;
+            font-weight: bold;
+            flex-shrink: 0;
+        }
+
+        .card[data-type="bug"] { border-left: 4px solid var(--type-bug); }
+        .card[data-type="feature"] { border-left: 4px solid var(--type-feature); }
+        .card[data-type="question"] { border-left: 4px solid var(--type-question); }
+        .card[data-type="task"] { border-left: 4px solid var(--type-task); }
+
+        .type-bug { color: var(--type-bug); }
+        .type-feature { color: var(--type-feature); }
+        .type-question { color: var(--type-question); }
+        .type-task { color: var(--type-task); }
+
+        .priority-critical { color: var(--priority-critical); }
+        .priority-high { color: var(--priority-high); }
+        .priority-normal { color: var(--priority-normal); }
+        .priority-low { color: var(--priority-low); }
+
+        .modal-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: rgba(0,0,0,0.5);
+            display: none;
+            justify-content: center;
+            align-items: center;
+            z-index: 1000;
+            padding: 20px;
+        }
+
+        .modal-overlay.active {
+            display: flex;
+        }
+
+        .modal {
+            background: var(--paper);
+            border: 3px solid var(--ink);
+            border-radius: 8px;
+            width: 100%;
+            max-width: 500px;
+            max-height: 90vh;
+            overflow-y: auto;
+            box-shadow: 8px 8px 0 var(--paper-shadow);
+        }
+
+        .modal-header {
+            padding: 15px 20px;
+            border-bottom: 2px solid var(--ink);
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            background: var(--column-bg);
+            position: sticky;
+            top: 0;
+            z-index: 1;
+        }
+
+        .modal-title {
+            font-size: 18px;
+            font-weight: bold;
+        }
+
+        .modal-close {
+            background: none;
+            border: none;
+            font-size: 24px;
+            cursor: pointer;
+            color: var(--ink);
+            padding: 0;
+            width: 30px;
+            height: 30px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .modal-body {
+            padding: 20px;
+        }
+
+        .form-group {
+            margin-bottom: 15px;
+        }
+
+        .form-label {
+            display: block;
+            margin-bottom: 5px;
+            font-weight: bold;
+            font-size: 14px;
+        }
+
+        .form-input,
+        .form-select,
+        .form-textarea {
+            width: 100%;
+            padding: 10px;
+            border: 2px solid var(--ink);
+            background: var(--paper);
+            font-family: inherit;
+            font-size: 14px;
+            border-radius: 4px;
+        }
+
+        .form-textarea {
+            min-height: 100px;
+            resize: vertical;
+        }
+
+        .form-input:focus,
+        .form-select:focus,
+        .form-textarea:focus {
+            outline: none;
+            box-shadow: 0 0 0 3px rgba(66, 165, 245, 0.3);
+        }
+
+        .form-row {
+            display: flex;
+            gap: 15px;
+        }
+
+        .form-row .form-group {
+            flex: 1;
+        }
+
+        .modal-footer {
+            padding: 15px 20px;
+            border-top: 2px solid var(--ink);
+            display: flex;
+            justify-content: flex-end;
+            gap: 10px;
+            background: var(--column-bg);
+            position: sticky;
+            bottom: 0;
+        }
+
+        .btn-cancel {
+            background: #9e9e9e;
+            color: white;
+            border-color: #9e9e9e;
+        }
+
+        .status-bar {
+            padding: 10px 15px;
+            background: var(--paper);
+            border: 2px solid var(--ink);
+            border-radius: 6px;
+            font-size: 14px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            box-shadow: 3px 3px 0 var(--paper-shadow);
+            flex-shrink: 0;
+        }
+
+        .message {
+            padding: 10px 15px;
+            margin-bottom: 15px;
+            border-radius: 4px;
+            display: none;
+            flex-shrink: 0;
+        }
+
+        .message.error {
+            background: #ffebee;
+            border: 2px solid var(--priority-critical);
+            color: #c62828;
+            display: block;
+        }
+
+        .message.loading {
+            background: #e3f2fd;
+            border: 2px solid var(--priority-normal);
+            color: #1565c0;
+            display: block;
+        }
+
+        @media (max-width: 1400px) {
+            :root {
+                --column-min-width: 260px;
+                --column-max-width: 320px;
+            }
+        }
+
+        @media (max-width: 1200px) {
+            :root {
+                --column-min-width: 240px;
+                --column-max-width: 290px;
+            }
+            .search-container {
+                min-width: 180px;
+                max-width: 250px;
+            }
+        }
+
+        @media (max-width: 992px) {
+            :root {
+                --column-min-width: 220px;
+                --column-max-width: 270px;
+            }
+            .header {
+                flex-direction: column;
+                align-items: flex-start;
+            }
+            .header-actions {
+                width: 100%;
+                justify-content: space-between;
+            }
+            .search-container {
+                flex: 1;
+                max-width: none;
+            }
+        }
+
+        @media (max-width: 768px) {
+            :root {
+                --column-min-width: 280px;
+                --column-max-width: 280px;
+                --column-gap: 15px;
+            }
+            body {
+                padding: 10px;
+            }
+            .column {
+                height: calc(100vh - 160px);
+            }
+            .logo-text {
+                font-size: 20px;
+            }
+            .btn {
+                padding: 8px 14px;
+                font-size: 13px;
+            }
+        }
+
+        @media print {
+            .header-actions, .status-bar { display: none; }
+            .board { flex-direction: column; }
+            .column { break-inside: avoid; page-break-inside: avoid; height: auto; }
+        }
+
+        .column-content.drag-over {
+            background: rgba(66, 165, 245, 0.1);
+            border: 2px dashed var(--priority-normal);
+            border-radius: 4px;
+        }
+
+        .card-count-badge {
+            position: absolute;
+            top: -8px;
+            right: -8px;
+            background: var(--ink);
+            color: var(--paper);
+            font-size: 10px;
+            padding: 2px 6px;
+            border-radius: 10px;
+            border: 2px solid var(--paper);
+        }
+    </style>
+</head>
+<body>
+    <header class="header">
+        <div class="logo">
+            <div class="logo-icon"><i class="fas fa-layer-group"></i></div>
+            <div class="logo-text">АСУТЕХ <span style="font-size:14px; color:#666;">// ТЕХПОДДЕРЖКА</span></div>
+        </div>
+        <div class="header-actions">
+            <div class="search-container">
+                <i class="fas fa-search search-icon"></i>
+                <input type="text" class="search-input" id="searchInput" placeholder="Поиск заявок...">
+            </div>
+            <button class="btn btn-primary" id="newCardBtn">
+                <i class="fas fa-plus"></i> НОВАЯ ЗАЯВКА
+            </button>
+        </div>
+    </header>
+
+    <div id="message" class="message"></div>
+
+    <main class="board-wrapper">
+        <div class="board" id="board"></div>
+    </main>
+
+    <footer class="status-bar">
+        <div>
+            <i class="fas fa-info-circle"></i> 
+            Перетаскивайте карточки • Нажмите для редактирования • 
+            <strong>Очередь</strong>: <span id="backlogCount">0</span> • 
+            <strong>В работе</strong>: <span id="inProgressCount">0</span> • 
+            <strong>Проверка</strong>: <span id="reviewCount">0</span> • 
+            <strong>Готово</strong>: <span id="doneCount">0</span>
+        </div>
+        <div>
+            <i class="fas fa-sync"></i> <a href="#" id="refreshBtn">Обновить</a>
+        </div>
+    </footer>
+
+    <div class="modal-overlay" id="cardModal">
+        <div class="modal">
+            <div class="modal-header">
+                <div class="modal-title" id="modalTitle">Новая заявка</div>
+                <button class="modal-close" id="modalClose">&times;</button>
+            </div>
+            <div class="modal-body">
+                <form id="cardForm">
+                    <input type="hidden" id="recordId">
+                    <div class="form-group">
+                        <label class="form-label">Номер заявки</label>
+                        <input type="text" class="form-input" id="ticketIdDisplay" readonly>
+                    </div>
+                    <div class="form-group">
+                        <label class="form-label">Заголовок *</label>
+                        <input type="text" class="form-input" id="cardTitle" required placeholder="напр., Не работает принтер в переговорной">
+                    </div>
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label class="form-label">Тип</label>
+                            <select class="form-select" id="cardType">
+                                <option value="bug">Ошибка</option>
+                                <option value="feature">Функция</option>
+                                <option value="question">Вопрос</option>
+                                <option value="task">Задача</option>
+                            </select>
+                        </div>
+                        <div class="form-group">
+                            <label class="form-label">Приоритет</label>
+                            <select class="form-select" id="cardPriority">
+                                <option value="critical">Критический</option>
+                                <option value="high">Высокий</option>
+                                <option value="normal" selected>Обычный</option>
+                                <option value="low">Низкий</option>
+                            </select>
+                        </div>
+                    </div>
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label class="form-label">Исполнитель</label>
+                            <input type="text" class="form-input" id="cardAssignee" placeholder="напр., ivanov">
+                        </div>
+                        <div class="form-group">
+                            <label class="form-label">Устройство/Система</label>
+                            <input type="text" class="form-input" id="cardDevice" placeholder="напр., Ноутбук-15">
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="form-label">Описание</label>
+                        <textarea class="form-textarea" id="cardDescription" placeholder="Текст ошибки, шаги воспроизведения, детали запроса..."></textarea>
+                    </div>
+                    <div class="form-group">
+                        <label class="form-label">
+                            <input type="checkbox" id="cardBlocked"> 
+                            <span style="color:var(--priority-critical)"> ЗАБЛОКИРОВАНО</span>
+                        </label>
+                    </div>
+                </form>
+            </div>
+            <div class="modal-footer">
+                <button class="btn btn-cancel" id="cancelBtn">Отмена</button>
+                <button class="btn btn-primary" id="saveBtn">Сохранить</button>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // Demo data for testing (without external API)
+        const COLUMNS = [
+            { id: 'backlog', name: 'ОЧЕРЕДЬ', icon: '●' },
+            { id: 'inProgress', name: 'В РАБОТЕ', icon: '◐' },
+            { id: 'review', name: 'ПРОВЕРКА', icon: '◑' },
+            { id: 'done', name: 'ГОТОВО', icon: '◉' }
+        ];
+
+        // Initial demo tickets
+        let tickets = [
+            { _id: '1', ticketId: 'T1', title: 'Не работает принтер', type: 'bug', priority: 'high', assignee: 'ivanov', device: 'Офис-1', description: 'Принтер не печатает документы', blocked: false, status: 'backlog' },
+            { _id: '2', ticketId: 'T2', title: 'Установить новый софт', type: 'task', priority: 'normal', assignee: 'petrov', device: 'Ноутбук-15', description: 'Установить Photoshop', blocked: false, status: 'inProgress' },
+            { _id: '3', ticketId: 'T3', title: 'Как сбросить пароль?', type: 'question', priority: 'low', assignee: '', device: '', description: 'Пользователь забыл пароль', blocked: false, status: 'review' },
+            { _id: '4', ticketId: 'T4', title: 'Добавить VPN доступ', type: 'feature', priority: 'critical', assignee: 'sidorov', device: 'Удалённый', description: 'Нужен VPN для работы из дома', blocked: true, status: 'backlog' }
+        ];
+
+        let draggedTicket = null;
+        let nextTicketId = 5;
+
+        const boardEl = document.getElementById('board');
+        const searchInput = document.getElementById('searchInput');
+        const newCardBtn = document.getElementById('newCardBtn');
+        const modal = document.getElementById('cardModal');
+        const modalTitle = document.getElementById('modalTitle');
+        const modalClose = document.getElementById('modalClose');
+        const cancelBtn = document.getElementById('cancelBtn');
+        const saveBtn = document.getElementById('saveBtn');
+        const cardForm = document.getElementById('cardForm');
+        const messageEl = document.getElementById('message');
+
+        const recordIdField = document.getElementById('recordId');
+        const ticketIdDisplay = document.getElementById('ticketIdDisplay');
+        const cardTitle = document.getElementById('cardTitle');
+        const cardType = document.getElementById('cardType');
+        const cardPriority = document.getElementById('cardPriority');
+        const cardAssignee = document.getElementById('cardAssignee');
+        const cardDevice = document.getElementById('cardDevice');
+        const cardDescription = document.getElementById('cardDescription');
+        const cardBlocked = document.getElementById('cardBlocked');
+
+        const backlogCount = document.getElementById('backlogCount');
+        const inProgressCount = document.getElementById('inProgressCount');
+        const reviewCount = document.getElementById('reviewCount');
+        const doneCount = document.getElementById('doneCount');
+
+        function renderBoard(filteredTickets = null) {
+            const ticketsToRender = filteredTickets || tickets;
+            boardEl.innerHTML = '';
+            
+            COLUMNS.forEach(column => {
+                const columnEl = document.createElement('div');
+                columnEl.className = 'column';
+                columnEl.dataset.column = column.id;
+                const columnTickets = ticketsToRender.filter(t => t.status === column.id);
+                
+                columnEl.innerHTML = `
+                    <div class="column-header">
+                        <span>${column.icon} ${column.name}</span>
+                        <span class="column-count">${columnTickets.length}</span>
+                    </div>
+                    <div class="column-content" data-column="${column.id}">
+                        ${columnTickets.map(ticket => renderTicket(ticket)).join('')}
+                    </div>
+                `;
+                boardEl.appendChild(columnEl);
+            });
+            
+            setupDragAndDrop();
+            updateCounts();
+        }
+
+        function renderTicket(ticket) {
+            const typeLabels = { bug: 'ОШ', feature: 'ФН', question: 'ВР', task: 'ЗД' };
+            const priorityColors = {
+                critical: 'var(--priority-critical)',
+                high: 'var(--priority-high)',
+                normal: 'var(--priority-normal)',
+                low: 'var(--priority-low)'
+            };
+            const priorityLabels = { critical: 'КРИТ', high: 'ВЫС', normal: 'ОБЫЧ', low: 'НИЗ' };
+            const assigneeInitial = ticket.assignee ? ticket.assignee.charAt(0).toUpperCase() : '?';
+            
+            return `
+                <div class="card" 
+                     draggable="true" 
+                     data-ticketid="${ticket.ticketId || ''}"
+                     data-type="${ticket.type}"
+                     data-priority="${ticket.priority}"
+                     data-status="${ticket.status}">
+                    <div class="card-header">
+                        <span class="card-id">${ticket.ticketId || 'НОВАЯ'}</span>
+                        <span class="card-type-icon type-${ticket.type}">${typeLabels[ticket.type]}</span>
+                    </div>
+                    <div class="card-title">${ticket.title || 'Без названия'}</div>
+                    <div class="card-meta">
+                        <span class="priority-indicator priority-${ticket.priority}">
+                            <span class="priority-dot" style="background:${priorityColors[ticket.priority]}"></span>
+                            ${priorityLabels[ticket.priority] || 'ОБЫЧ'}
+                        </span>
+                        <div class="assignee" title="${ticket.assignee || 'Не назначен'}">
+                            ${ticket.assignee ? 
+                                `<div class="assignee-avatar">${assigneeInitial}</div>` : 
+                                `<div class="assignee-avatar" style="background:#ccc; color:#666;">?</div>`
+                            }
+                            <span>${ticket.assignee || 'Не назначен'}</span>
+                        </div>
+                    </div>
+                    ${ticket.device ? `<div style="font-size:11px; margin-top:5px; opacity:0.8;">${ticket.device}</div>` : ''}
+                    ${ticket.blocked ? `<div style="font-size:11px; margin-top:5px; color:var(--priority-critical);"><i class="fas fa-ban"></i> ЗАБЛОКИРОВАНО</div>` : ''}
+                </div>
+            `;
+        }
+
+        function updateCounts() {
+            backlogCount.textContent = tickets.filter(t => t.status === 'backlog').length;
+            inProgressCount.textContent = tickets.filter(t => t.status === 'inProgress').length;
+            reviewCount.textContent = tickets.filter(t => t.status === 'review').length;
+            doneCount.textContent = tickets.filter(t => t.status === 'done').length;
+        }
+
+        function setupDragAndDrop() {
+            const cards = document.querySelectorAll('.card');
+            const columns = document.querySelectorAll('.column-content');
+            
+            cards.forEach(card => {
+                card.addEventListener('dragstart', handleDragStart);
+                card.addEventListener('dragend', handleDragEnd);
+            });
+            
+            columns.forEach(column => {
+                column.addEventListener('dragover', handleDragOver);
+                column.addEventListener('drop', handleDrop);
+                column.addEventListener('dragenter', handleDragEnter);
+                column.addEventListener('dragleave', handleDragLeave);
+            });
+        }
+
+        function handleDragStart(e) {
+            const ticketId = this.dataset.ticketid;
+            draggedTicket = tickets.find(t => t.ticketId === ticketId);
+            this.classList.add('dragging');
+            e.dataTransfer.effectAllowed = 'move';
+            e.dataTransfer.setData('text/plain', ticketId);
+            setTimeout(() => this.style.opacity = '0.5', 0);
+        }
+
+        function handleDragEnd() {
+            this.classList.remove('dragging');
+            this.style.opacity = '1';
+            document.querySelectorAll('.column-content').forEach(col => {
+                col.classList.remove('drag-over');
+            });
+            draggedTicket = null;
+        }
+
+        function handleDragOver(e) {
+            e.preventDefault();
+            e.dataTransfer.dropEffect = 'move';
+        }
+
+        function handleDragEnter(e) {
+            e.preventDefault();
+            this.classList.add('drag-over');
+        }
+
+        function handleDragLeave(e) {
+            if (!this.contains(e.relatedTarget)) {
+                this.classList.remove('drag-over');
+            }
+        }
+
+        function handleDrop(e) {
+            e.preventDefault();
+            this.classList.remove('drag-over');
+            
+            const ticketId = e.dataTransfer.getData('text/plain');
+            const newStatus = this.dataset.column;
+            
+            if (draggedTicket && draggedTicket.ticketId === ticketId && draggedTicket.status !== newStatus) {
+                draggedTicket.status = newStatus;
+                renderBoard();
+            }
+        }
+
+        function openModal(ticket = null) {
+            modal.classList.add('active');
+            if (ticket) {
+                modalTitle.textContent = `Редактировать заявку ${ticket.ticketId}`;
+                recordIdField.value = ticket._id;
+                ticketIdDisplay.value = ticket.ticketId || '';
+                cardTitle.value = ticket.title || '';
+                cardType.value = ticket.type || 'task';
+                cardPriority.value = ticket.priority || 'normal';
+                cardAssignee.value = ticket.assignee || '';
+                cardDevice.value = ticket.device || '';
+                cardDescription.value = ticket.description || '';
+                cardBlocked.checked = ticket.blocked || false;
+            } else {
+                modalTitle.textContent = 'Новая заявка';
+                cardForm.reset();
+                recordIdField.value = '';
+                ticketIdDisplay.value = `T${nextTicketId}`;
+                cardType.value = 'task';
+                cardPriority.value = 'normal';
+                cardBlocked.checked = false;
+            }
+        }
+
+        function closeModal() {
+            modal.classList.remove('active');
+        }
+
+        function saveTicket() {
+            const recordId = recordIdField.value;
+            const ticketData = {
+                ticketId: ticketIdDisplay.value,
+                title: cardTitle.value.trim(),
+                type: cardType.value,
+                priority: cardPriority.value,
+                assignee: cardAssignee.value.trim(),
+                device: cardDevice.value.trim(),
+                description: cardDescription.value.trim(),
+                blocked: cardBlocked.checked,
+                status: recordId ? tickets.find(t => t._id === recordId)?.status : 'backlog'
+            };
+            
+            if (!ticketData.title) {
+                alert('Пожалуйста, введите заголовок');
+                return;
+            }
+            
+            if (recordId) {
+                const index = tickets.findIndex(t => t._id === recordId);
+                if (index !== -1) {
+                    tickets[index] = { ...tickets[index], ...ticketData };
+                }
+            } else {
+                tickets.push({
+                    _id: String(nextTicketId),
+                    ...ticketData
+                });
+                nextTicketId++;
+            }
+            renderBoard();
+            closeModal();
+        }
+
+        function handleSearch(e) {
+            const query = e.target.value.toLowerCase().trim();
+            if (!query) {
+                renderBoard();
+                return;
+            }
+            const filtered = tickets.filter(t => 
+                (t.ticketId && t.ticketId.toLowerCase().includes(query)) ||
+                (t.title && t.title.toLowerCase().includes(query)) ||
+                (t.assignee && t.assignee.toLowerCase().includes(query)) ||
+                (t.device && t.device.toLowerCase().includes(query)) ||
+                (t.description && t.description.toLowerCase().includes(query))
+            );
+            renderBoard(filtered);
+        }
+
+        function setupEventListeners() {
+            newCardBtn.addEventListener('click', () => openModal());
+            modalClose.addEventListener('click', closeModal);
+            cancelBtn.addEventListener('click', closeModal);
+            saveBtn.addEventListener('click', saveTicket);
+            
+            modal.addEventListener('click', (e) => {
+                if (e.target === modal) closeModal();
+            });
+            
+            searchInput.addEventListener('input', handleSearch);
+            
+            document.addEventListener('keydown', (e) => {
+                if (e.key === 'Escape' && modal.classList.contains('active')) {
+                    closeModal();
+                }
+            });
+            
+            boardEl.addEventListener('click', (e) => {
+                const card = e.target.closest('.card');
+                if (card) {
+                    const ticketId = card.dataset.ticketid;
+                    const ticket = tickets.find(t => t.ticketId === ticketId);
+                    if (ticket) openModal(ticket);
+                }
+            });
+        }
+
+        document.addEventListener('DOMContentLoaded', () => {
+            setupEventListeners();
+            renderBoard();
+        });
+    </script>
+</body>
+</html>
